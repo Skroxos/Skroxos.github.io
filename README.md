@@ -32,4 +32,3 @@ An event-driven FSM designed for maximum decoupling. Logic is strictly separated
 ### 3. Data-Driven Inventory System and Building System
 A robust inventory architecture utilizing `ScriptableObjects` for strict separation of UI and data layers. Implemented using the MVC pattern to ensure that visual updates do not interfere with core game logic.
 *  **[View Source Code](https://github.com/Skroxos/SurvivalGame_Project)**
-* ![Inventory Preview](https://link-to-your-inventory-gif-or-image.gif)
