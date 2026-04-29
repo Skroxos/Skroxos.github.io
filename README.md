@@ -20,7 +20,8 @@ I am a Unity and VR Developer with 3 years of hands-on experience building compl
 ### 1. Drone Assembly Simulator
 A fully functional PC/VR simulation featuring a 3-tier architecture. Deployed on a live Azure server with rate limiting, SHA-256 signed requests, and automated CI/CD pipelines via Terraform.
 *  **[View Source Code & Architecture Docs](https://github.com/Skroxos/Drone-Assembly-Simulator)**
-* ![Drone Sim Preview](https://link-to-your-drone-gif-or-image.gif)
+  
+   ![Drone Sim Preview](SnapPartGifoptimize.gif)
 
 ### 2. Modular Plug-and-Play State Machine & Skill Tree
 An event-driven FSM designed for maximum decoupling. Logic is strictly separated, utilizing C# Action delegates for scalable state transitions without hardcoded dependencies, ensuring easy reusability across different projects.
