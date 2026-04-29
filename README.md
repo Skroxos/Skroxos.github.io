@@ -19,15 +19,15 @@ I am a Unity and VR Developer with 3 years of hands-on experience building compl
 
 ### 1. Drone Assembly Simulator
 A fully functional PC/VR simulation featuring a 3-tier architecture. Deployed on a live Azure server with rate limiting, SHA-256 signed requests, and automated CI/CD pipelines via Terraform.
-* 🔗 **[View Source Code & Architecture Docs](https://github.com/Skroxos/Drone-Assembly-Simulator)**
+*  **[View Source Code & Architecture Docs](https://github.com/Skroxos/Drone-Assembly-Simulator)**
 * ![Drone Sim Preview](https://link-to-your-drone-gif-or-image.gif)
 
-### 2. Modular Plug-and-Play State Machine
+### 2. Modular Plug-and-Play State Machine & Skill Tree
 An event-driven FSM designed for maximum decoupling. Logic is strictly separated, utilizing C# Action delegates for scalable state transitions without hardcoded dependencies, ensuring easy reusability across different projects.
-* 🔗 **[View Source Code](https://github.com/Skroxos/...)**
+*  **[View Source Code](https://github.com/Skroxos/SkillTree-FSM)**
 * ![FSM Preview](https://link-to-your-fsm-gif-or-image.gif)
 
-### 3. Data-Driven Inventory System
+### 3. Data-Driven Inventory System and Building System
 A robust inventory architecture utilizing `ScriptableObjects` for strict separation of UI and data layers. Implemented using the MVC pattern to ensure that visual updates do not interfere with core game logic.
-* 🔗 **[View Source Code](https://github.com/Skroxos/...)**
+*  **[View Source Code](https://github.com/Skroxos/SurvivalGame_Project)**
 * ![Inventory Preview](https://link-to-your-inventory-gif-or-image.gif)
