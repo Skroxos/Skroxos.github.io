@@ -4,7 +4,7 @@
 I am a Unity and VR Developer with 3 years of hands-on experience building complex, full-stack private projects. I focus heavily on robust systems architecture, clean decoupled code, and seamless cloud integrations. I bridge the gap between frontend gameplay and backend infrastructure, utilizing CI/CD pipelines and enterprise-level patterns.
 
 * 📍 **Location:** Ústí nad Labem, Czechia
-* 📧 **Contact:** [krciladam@gmail.com](mailto:krciladam@gmail.com) | +420 734 711 876
+* 📧 **Contact:** [krciladam@gmail.com](mailto:krciladam@gmail.com) 
 
 ---
 
