@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study | VR Projekt</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            max-width: 800px; /* Užší blok textu se lépe čte */
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #fcfcfc;
+        }
+        .back-link { display: block; margin-bottom: 20px; color: #777; }
+        h1 { margin-bottom: 10px; }
+        .tag { background: #eee; padding: 4px 10px; border-radius: 4px; font-size: 0.8em; margin-right: 5px; }
+        .content-image { width: 100%; border-radius: 8px; margin: 30px 0; }
+        section { margin-top: 40px; }
+        code { background: #f4f4f4; padding: 2px 5px; border-radius: 4px; font-family: monospace; }
+        pre { background: #282c34; color: #abb2bf; padding: 20px; border-radius: 8px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-link">← Zpět na úvod</a>
+
+    <h1>[Název VR Projektu]</h1>
+    <div>
+        <span class="tag">Unity 3D</span>
+        <span class="tag">C#</span>
+        <span class="tag">VR / OpenXR</span>
+        <span class="tag">Optimization</span>
+    </div>
+
+    <img src="images/vr-hero.jpg" alt="VR Gameplay" class="content-image">
+
+    <section>
+        <h2>The Problem (Výzva)</h2>
+        <p>U VR titulů je největším nepřítelem nestabilní framerate, který způsobuje nevolnost. Hlavním cílem bylo vytvořit plynulý zážitek s nulovými záseky (stuttering) způsobenými Garbage Collectorem.</p>
+    </section>
+
+    <section>
+        <h2>The Solution (Řešení)</h2>
+        <p>Implementoval jsem architekturu, která minimalizuje alokace na Heapu během hraní. Veškeré vyhledávání objektů probíhá přes <code>Dictionary</code> s O(1) složitostí. Logika herních systémů je striktně oddělena od inputů brýlí přes Eventy, což zajišťuje modularitu.</p>
+    </section>
+
+    <section>
+        <h2>Ukázka kódu</h2>
+        <p>Zde je příklad, jak řeším [např. Interakci objektů]:</p>
+        <pre><code>
+// Příklad tvého čistého kódu
+public class InteractionSystem : MonoBehaviour 
+{
+    // Použití Dictionary pro rychlý přístup bez GC alokací
+    private readonly Dictionary<int, IInteractable> _interactables = new();
+
+    public void Register(int id, IInteractable item) => _interactables[id] = item;
+}
+        </code></pre>
+    </section>
+
+</body>
+</html>
