@@ -5,209 +5,193 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio | Unity Software Engineer</title>
     <style>
-        /* ZÁKLADNÍ NASTAVENÍ - Dark Mode + Tech Grid */
+        /* TÉMA: Deep Black & Pure Contrast (Cinematic) */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #050505; /* Téměř absolutní černá */
+            color: #a0a0a0; /* Světle šedá pro čitelnost odstavců */
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 { color: #ffffff; margin: 0; }
+        a { text-decoration: none; }
+
+        /* Kontejner pro udržení šířky */
+        .container {
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 40px 20px;
-            max-width: 1000px;
-            
-            /* Tmavé pozadí s jemnou tech mřížkou */
-            background-color: #121212;
-            background-image: radial-gradient(#2a2a2a 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: #e0e0e0;
+            padding: 0 20px;
         }
 
-        h1, h2, h3 { color: #ffffff; margin-top: 0; }
-        p { color: #b3b3b3; }
-        
-        /* ODKAZY A TLAČÍTKA - Visual Studio Blue */
-        a { color: #4daafc; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-
-        .btn {
-            display: inline-block;
-            padding: 8px 16px;
-            margin-top: 15px;
-            margin-right: 10px;
-            background-color: #007acc;
-            color: #ffffff;
-            border-radius: 4px;
-            font-size: 0.9em;
-            transition: background-color 0.2s ease;
-        }
-        .btn:hover { 
-            background-color: #005999; 
-            text-decoration: none; 
-        }
-        .btn-outline {
-            background-color: transparent;
-            color: #4daafc;
-            border: 1px solid #4daafc;
-        }
-        .btn-outline:hover {
-            background-color: rgba(77, 170, 252, 0.1);
-        }
-
-        /* 1. SEKCÍ: ABOUT (Úvod) */
-        .hero-section {
+        /* 1. HERO SEKCE (Vycentrovaná, obrovská, přes celou obrazovku) */
+        .hero {
+            min-height: 85vh;
             display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            justify-content: space-between;
-            margin-bottom: 80px;
-            gap: 40px;
+            text-align: center;
+            background: radial-gradient(circle at 50% 30%, #1a1a2e 0%, #050505 60%);
+            border-bottom: 1px solid #1a1a1a;
         }
-        .hero-text { flex: 1; }
-        .hero-text h1 { font-size: 2.5em; margin-bottom: 5px; }
-        .hero-text h3 { color: #4daafc; font-weight: normal; margin-bottom: 20px; }
-        
-        .hero-image {
-            width: 250px;
-            height: 250px;
-            background-color: #1e1e1e;
-            border: 1px solid #333;
+
+        .hero-avatar {
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
+            background-color: #222;
+            margin-bottom: 20px;
+            border: 2px solid #333;
+            overflow: hidden;
+        }
+
+        .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .hero h1 { font-size: 4rem; letter-spacing: -2px; margin-bottom: 10px; }
+        .hero h2 { font-size: 1.5rem; color: #4daafc; font-weight: 400; margin-bottom: 30px; }
+        .hero p { font-size: 1.2rem; max-width: 600px; margin-bottom: 40px; }
+
+        .btn-group { display: flex; gap: 20px; justify-content: center; }
+        .btn {
+            padding: 12px 30px;
+            border-radius: 30px; /* Zakulacená tlačítka */
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-primary { background-color: #ffffff; color: #000000; }
+        .btn-primary:hover { background-color: #d0d0d0; transform: scale(1.05); }
+        .btn-secondary { background-color: transparent; color: #ffffff; border: 1px solid #555; }
+        .btn-secondary:hover { border-color: #ffffff; transform: scale(1.05); }
+
+        /* 2. SHOWCASE (Projekty na střídačku) */
+        .showcase-row {
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: #555;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            gap: 60px;
+            padding: 120px 20px;
+            border-bottom: 1px solid #111;
         }
 
-        /* 2. SEKCÍ: KARTY PROJEKTŮ */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 80px;
-        }
-        .project-card {
-            background: #1e1e1e;
-            padding: 30px;
-            border-radius: 8px;
-            border: 1px solid #333;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        /* Hover efekt pro zvednutí karty */
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-        }
+        /* Třída pro obrácení pořadí (Obrázek vlevo, text vpravo) */
+        .showcase-row.reverse { flex-direction: row-reverse; }
 
-        /* 3. SEKCÍ: COOPERATION */
-        .coop-section {
-            display: flex;
-            align-items: flex-start;
-            gap: 40px;
-            background: #1e1e1e;
-            padding: 40px;
-            border-radius: 8px;
-            border: 1px solid #333;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        .showcase-text { flex: 1; }
+        .showcase-media { flex: 1.2; }
+
+        .showcase-media .image-wrapper {
+            width: 100%;
+            height: 400px; /* Obrovský prostor pro ukázku hry/kódu */
+            background-color: #111;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            border: 1px solid #222;
         }
-        .coop-text { flex: 1; }
-        .coop-media {
-            width: 400px;
-            height: 250px;
-            background-color: #2a2a2a;
-            border-radius: 8px;
-            display: flex;
+        .showcase-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .showcase-media .image-wrapper:hover img { transform: scale(1.03); } /* Lehký zoom po najetí myší */
+
+        .showcase-text h2 { font-size: 2.5rem; margin-bottom: 20px; letter-spacing: -1px; }
+        .showcase-text h3 { font-size: 1rem; color: #4daafc; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+        .showcase-text p { font-size: 1.1rem; margin-bottom: 30px; }
+
+        /* Štítky */
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+        .tag { background: #151515; color: #888; padding: 6px 15px; border-radius: 4px; border: 1px solid #222; font-size: 0.85rem; }
+
+        .read-link {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            color: #555;
-            border: 1px solid #333;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+            transition: all 0.3s ease;
         }
+        .read-link:hover { color: #4daafc; border-bottom: 2px solid #4daafc; }
+        .read-link span { margin-left: 8px; transition: transform 0.3s; }
+        .read-link:hover span { transform: translateX(5px); }
 
-        /* ŠTÍTKY (Tech stack) */
-        .tech-tags { margin-bottom: 15px; }
-        .tag {
-            display: inline-block;
-            background: #2d2d2d;
-            color: #aaa;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            margin-right: 5px;
-            margin-bottom: 5px;
-            border: 1px solid #444;
-        }
-
-        /* RESPONZIVITA PRO MOBILY */
-        @media (max-width: 768px) {
-            .hero-section, .coop-section { flex-direction: column; }
-            .projects-grid { grid-template-columns: 1fr; }
-            .hero-image { width: 200px; height: 200px; margin: 0 auto; }
-            .coop-media { width: 100%; height: 200px; }
+        /* RESPONZIVITA (Mobily) */
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 2.8rem; }
+            .showcase-row, .showcase-row.reverse { flex-direction: column; padding: 60px 20px; gap: 30px; text-align: left; }
+            .showcase-media .image-wrapper { height: 250px; }
+            .btn-group { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-    <header class="hero-section">
-        <div class="hero-text">
-            <h1>Hi, I'm Adam Krčil</h1>
-            <h3>Unity Software Engineer</h3>
-            <p>I specialize in writing clean, scalable C# systems in Unity. From asynchronous backend communication and Dependency Injection to Garbage Collection optimization ensuring stable performance across mobile and VR platforms.</p>
-            <div class="tech-tags" style="margin-top: 20px;">
-                <span class="tag">C# Architecture</span>
-                <span class="tag">API Integration</span>
-                <span class="tag">GitFlow</span>
+    <header class="hero">
+        <div class="container" style="display: flex; flex-direction: column; align-items: center;">
+            <div class="hero-avatar">
+                </div>
+            <h1>Adam Krčil</h1>
+            <h2>Unity Software Engineer</h2>
+            <p>Building clean, scalable C# systems. Specialized in asynchronous API integration, Zero-GC optimization, and robust architecture for VR & Mobile platforms.</p>
+            
+            <div class="btn-group">
+                <a href="mailto:tvuj@email.cz" class="btn btn-primary">Get in Touch</a>
+                <a href="https://github.com/Skroxos" target="_blank" class="btn btn-secondary">View GitHub</a>
             </div>
-            <a href="mailto:tvuj@email.cz" class="btn">Contact Me</a>
-            <a href="https://github.com/Skroxos" class="btn btn-outline" target="_blank">GitHub</a>
-            <a href="https://linkedin.com/in/tvuj-profil" class="btn btn-outline" target="_blank">LinkedIn</a>
-        </div>
-        <div class="hero-image">
-            [Your Photo / Avatar]
         </div>
     </header>
 
-    <section class="projects-grid">
-        <div class="project-card">
-            <h2>C# Architecture & Network Sandbox</h2>
+    <section class="showcase-row container">
+        <div class="showcase-text">
+            <h3>Architecture</h3>
+            <h2>C# & Network Sandbox</h2>
+            <p>A production-ready framework for backend REST API communication. Replaced outdated Coroutines with asynchronous <code>UniTask</code> and <code>CancellationToken</code> for fail-safe timeouts. Utilized <strong>VContainer</strong> to decouple game logic and enable local server mocking.</p>
             <div class="tech-tags">
-                <span class="tag">VContainer (DI)</span>
+                <span class="tag">VContainer</span>
                 <span class="tag">UniTask</span>
                 <span class="tag">REST API</span>
             </div>
-            <p>A robust, modular system for backend REST API communication designed for mobile games. Replaced outdated Coroutines with asynchronous <code>UniTask</code> and <code>CancellationToken</code> for fail-safe network timeouts.</p>
-            <p>Implemented Dependency Injection via <strong>VContainer</strong>, utilizing Interfaces to fully decouple game logic from visual representation and enable easy server mocking.</p>
-            <a href="TechSandbox-detail.html" class="btn">Read Case Study</a>
-            <a href="https://github.com/Skroxos/TechSandbox" class="btn btn-outline" target="_blank">Source Code</a>
+            <a href="TechSandbox-detail.html" class="read-link">Read Case Study <span>→</span></a>
         </div>
-
-        <div class="project-card">
-            <h2>[Název VR Hry]</h2>
-            <div class="tech-tags">
-                <span class="tag">VR / OpenXR</span>
-                <span class="tag">Zero-GC</span>
-                <span class="tag">3D Math</span>
-            </div>
-            <p>Complete end-to-end development of a VR title from prototype to playable build. Addressed strict VR framerate constraints by implementing Zero-GC practices (O(1) Dictionary lookups, boxing prevention).</p>
-            <p>Decoupled core game logic from hardware inputs using event-driven architecture to ensure modularity and scalability.</p>
-            <a href="Vr_detail.html" class="btn">Read Case Study</a>
-            <a href="https://github.com/Skroxos/Drone-Assembly-Simulator" class="btn btn-outline" target="_blank">GitHub</a>
+        <div class="showcase-media">
+            <div class="image-wrapper">
+                </div>
         </div>
     </section>
 
-    <section class="coop-section">
-        <div class="coop-text">
-            <h2>Commercial Cooperation</h2>
-            <h3 style="margin-bottom: 10px;">RZE Studio – Bukkakuu</h3>
+    <section class="showcase-row reverse container">
+        <div class="showcase-text">
+            <h3>End-to-End VR</h3>
+            <h2>[Název VR Hry]</h2>
+            <p>Complete development of a VR title from prototype to playable build. Ensured stable framerates by implementing strict Zero-GC practices, including O(1) Dictionary lookups. Decoupled core mechanics from hardware inputs using event-driven design.</p>
+            <div class="tech-tags">
+                <span class="tag">OpenXR</span>
+                <span class="tag">Zero-GC</span>
+                <span class="tag">Optimization</span>
+            </div>
+            <a href="Vr_detail.html" class="read-link">Read Case Study <span>→</span></a>
+        </div>
+        <div class="showcase-media">
+            <div class="image-wrapper">
+                </div>
+        </div>
+    </section>
+
+    <section class="showcase-row container" style="border-bottom: none;">
+        <div class="showcase-text">
+            <h3>Commercial Contract</h3>
+            <h2>RZE Studio – Bukkakuu</h2>
+            <p>Commercial collaboration within a distributed team. Implemented UI systems and core gameplay loops based on design specifications. Strictly adhered to industry-standard GitFlow, managing feature branches and using <code>git rebase</code> to maintain a clean commit history.</p>
             <div class="tech-tags">
                 <span class="tag">Team Development</span>
-                <span class="tag">UI/UX</span>
-                <span class="tag">Core Loops</span>
+                <span class="tag">GitFlow</span>
+                <span class="tag">UI / UX</span>
             </div>
-            <p><strong>Role:</strong> Unity Developer (Contract)</p>
-            <p>Commercial collaboration within a distributed team. Implemented UI systems and core gameplay loops based on design specifications.</p>
-            <p>Strictly adhered to industry-standard GitFlow. Managed feature branches, code reviews via Pull Requests, and utilized <code>git rebase</code> to maintain a clean, conflict-free commit history in Unity scenes.</p>
         </div>
-        <div class="coop-media">
-            [GIF / Screenshot of Bukkakuu]
+        <div class="showcase-media">
+            <div class="image-wrapper">
+                </div>
         </div>
     </section>
 
