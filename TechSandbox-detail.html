@@ -1,66 +1,158 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Case Study | VR Projekt</title>
+    <title>Case Study | C# Architecture & API</title>
     <style>
+        /* ZÁKLADNÍ NASTAVENÍ - Dark Mode + Tech Grid */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.8;
-            color: #333;
-            max-width: 800px; /* Užší blok textu se lépe čte */
             margin: 0 auto;
-            padding: 40px 20px;
-            background-color: #fcfcfc;
+            padding: 40px 20px 80px 20px;
+            max-width: 800px; /* Ideální šířka pro čtení textu */
+            
+            background-color: #121212;
+            background-image: radial-gradient(#2a2a2a 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #d4d4d4; /* Světle šedá, ne čistě bílá, kvůli únavě očí */
+            font-size: 1.1em;
         }
-        .back-link { display: block; margin-bottom: 20px; color: #777; }
-        h1 { margin-bottom: 10px; }
-        .tag { background: #eee; padding: 4px 10px; border-radius: 4px; font-size: 0.8em; margin-right: 5px; }
-        .content-image { width: 100%; border-radius: 8px; margin: 30px 0; }
-        section { margin-top: 40px; }
-        code { background: #f4f4f4; padding: 2px 5px; border-radius: 4px; font-family: monospace; }
-        pre { background: #282c34; color: #abb2bf; padding: 20px; border-radius: 8px; overflow-x: auto; }
+
+        h1, h2, h3 { color: #ffffff; margin-top: 2em; margin-bottom: 0.5em; }
+        h1 { font-size: 2.5em; margin-top: 0; line-height: 1.2; }
+        
+        /* ODKAZ ZPĚT */
+        .back-link { 
+            display: inline-block; 
+            margin-bottom: 40px; 
+            color: #4daafc; 
+            text-decoration: none; 
+            font-weight: bold;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .back-link:hover { color: #007acc; }
+
+        /* ŠTÍTKY (Tech stack) */
+        .tech-tags { margin-bottom: 30px; }
+        .tag {
+            display: inline-block;
+            background: #1e1e1e;
+            color: #4daafc;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #333;
+            font-weight: bold;
+        }
+
+        /* HLAVNÍ OBRÁZEK / GIF */
+        .hero-media {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0 40px 0;
+            border: 1px solid #333;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        /* ZVÝRAZNĚNÉ SEKCE (Challenge / Solution) */
+        .highlight-box {
+            background-color: #1a1a1a;
+            border-left: 4px solid #4daafc;
+            padding: 20px 30px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .highlight-box h2 { margin-top: 0; color: #4daafc; font-size: 1.4em;}
+        .highlight-box p { margin-bottom: 0; }
+
+        /* UKÁZKA KÓDU (IDE Look) */
+        .code-container { margin: 40px 0; }
+        .code-header {
+            background-color: #2d2d2d;
+            color: #888;
+            padding: 8px 15px;
+            font-size: 0.85em;
+            border-radius: 8px 8px 0 0;
+            font-family: monospace;
+            border: 1px solid #333;
+            border-bottom: none;
+        }
+        pre {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 0 0 8px 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            border: 1px solid #333;
+            margin-top: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            line-height: 1.5;
+        }
+        
+        /* Jednoduché obarvení klíčových slov v C# pro efekt */
+        .keyword { color: #569cd6; } /* Modrá jako public, interface */
+        .type { color: #4ec9b0; } /* Zelená jako UniTask, string */
+        .method { color: #dcdcaa; } /* Žlutá jako SendPostRequestSafeAsync */
+
+        /* RESPONZIVITA PRO MOBILY */
+        @media (max-width: 768px) {
+            body { padding: 30px 15px; }
+            h1 { font-size: 2em; }
+            .highlight-box { padding: 15px 20px; }
+        }
     </style>
 </head>
 <body>
 
-    <a href="index.html" class="back-link">← Zpět na úvod</a>
+    <a href="index.html" class="back-link">← Back to Portfolio</a>
 
-    <h1>[Název VR Projektu]</h1>
-    <div>
-        <span class="tag">Unity 3D</span>
-        <span class="tag">C#</span>
-        <span class="tag">VR / OpenXR</span>
-        <span class="tag">Optimization</span>
+    <h1>C# Architecture & Network Sandbox</h1>
+    <div class="tech-tags">
+        <span class="tag">VContainer</span>
+        <span class="tag">UniTask</span>
+        <span class="tag">REST API</span>
+        <span class="tag">Dependency Injection</span>
     </div>
 
-    <img src="images/vr-hero.jpg" alt="VR Gameplay" class="content-image">
+    <p>Mobile games heavily rely on stable backend communication, but standard Unity WebRequests using Coroutines often lead to callback hell, block the main thread, and lack proper timeout fail-safes. This project serves as a production-ready framework to solve these structural issues.</p>
 
-    <section>
-        <h2>The Problem (Výzva)</h2>
-        <p>U VR titulů je největším nepřítelem nestabilní framerate, který způsobuje nevolnost. Hlavním cílem bylo vytvořit plynulý zážitek s nulovými záseky (stuttering) způsobenými Garbage Collectorem.</p>
-    </section>
+    <div class="highlight-box">
+        <h2>The Challenge</h2>
+        <p>The primary goal was to create a network layer that is completely isolated from the game's UI and core logic. If the backend server is offline or experiencing high latency, the game must not freeze, and the UI must react gracefully. Furthermore, the architecture needed to support rapid offline development without requiring a live server connection.</p>
+    </div>
 
-    <section>
-        <h2>The Solution (Řešení)</h2>
-        <p>Implementoval jsem architekturu, která minimalizuje alokace na Heapu během hraní. Veškeré vyhledávání objektů probíhá přes <code>Dictionary</code> s O(1) složitostí. Logika herních systémů je striktně oddělena od inputů brýlí přes Eventy, což zajišťuje modularitu.</p>
-    </section>
+    <div class="highlight-box" style="border-left-color: #4ec9b0;"> <h2 style="color: #4ec9b0;">The Solution</h2>
+        <p>I developed a robust network layer using <strong>UniTask</strong> for zero-allocation asynchronous programming. To prevent hard-coupling, the UI components communicate with the network layer strictly through an <code>INetworkService</code> interface.</p>
+        <p style="margin-top: 15px;">The dependencies are resolved and injected using <strong>VContainer</strong>. This Dependency Injection setup allows seamless switching between a live production API and a local "Mock" server simulator by simply changing one line in the Lifetime Scope.</p>
+    </div>
 
-    <section>
-        <h2>Ukázka kódu</h2>
-        <p>Zde je příklad, jak řeším [např. Interakci objektů]:</p>
-        <pre><code>
-// Příklad tvého čistého kódu
-public class InteractionSystem : MonoBehaviour 
+    <h2>Implementation Details</h2>
+    <p>By enforcing the Dependency Inversion Principle (SOLID), the client becomes "dumb". It doesn't know how the data is sent; it only knows the contract it signed. Below is the core interface defining the strict contract for any network service used in the project.</p>
+
+    <div class="code-container">
+        <div class="code-header">INetworkService.cs</div>
+        <pre><code><span class="keyword">using</span> System.Threading;
+<span class="keyword">using</span> Cysharp.Threading.Tasks;
+
+<span class="keyword">public</span> <span class="keyword">interface</span> <span class="type">INetworkService</span>
 {
-    // Použití Dictionary pro rychlý přístup bez GC alokací
-    private readonly Dictionary<int, IInteractable> _interactables = new();
-
-    public void Register(int id, IInteractable item) => _interactables[id] = item;
-}
-        </code></pre>
-    </section>
+    <span class="type">UniTask</span>&lt;<span class="type">string</span>&gt; <span class="method">SendPostRequestSafeAsync</span>(
+        <span class="type">string</span> url, 
+        <span class="type">string</span> jsonPayload, 
+        <span class="type">CancellationToken</span> token
+    );
+}</code></pre>
+    </div>
 
 </body>
 </html>
