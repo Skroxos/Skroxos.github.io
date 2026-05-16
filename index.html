@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Unity Software Engineer</title>
+    <style>
+        /* ZÁKLADNÍ NASTAVENÍ - Dark Mode + Tech Grid */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0 auto;
+            padding: 40px 20px;
+            max-width: 1000px;
+            
+            /* Tmavé pozadí s jemnou tech mřížkou */
+            background-color: #121212;
+            background-image: radial-gradient(#2a2a2a 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #e0e0e0;
+        }
+
+        h1, h2, h3 { color: #ffffff; margin-top: 0; }
+        p { color: #b3b3b3; }
+        
+        /* ODKAZY A TLAČÍTKA - Visual Studio Blue */
+        a { color: #4daafc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-top: 15px;
+            margin-right: 10px;
+            background-color: #007acc;
+            color: #ffffff;
+            border-radius: 4px;
+            font-size: 0.9em;
+            transition: background-color 0.2s ease;
+        }
+        .btn:hover { 
+            background-color: #005999; 
+            text-decoration: none; 
+        }
+        .btn-outline {
+            background-color: transparent;
+            color: #4daafc;
+            border: 1px solid #4daafc;
+        }
+        .btn-outline:hover {
+            background-color: rgba(77, 170, 252, 0.1);
+        }
+
+        /* 1. SEKCÍ: ABOUT (Úvod) */
+        .hero-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 80px;
+            gap: 40px;
+        }
+        .hero-text { flex: 1; }
+        .hero-text h1 { font-size: 2.5em; margin-bottom: 5px; }
+        .hero-text h3 { color: #4daafc; font-weight: normal; margin-bottom: 20px; }
+        
+        .hero-image {
+            width: 250px;
+            height: 250px;
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        /* 2. SEKCÍ: KARTY PROJEKTŮ */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+        .project-card {
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        /* Hover efekt pro zvednutí karty */
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        /* 3. SEKCÍ: COOPERATION */
+        .coop-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            background: #1e1e1e;
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .coop-text { flex: 1; }
+        .coop-media {
+            width: 400px;
+            height: 250px;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            border: 1px solid #333;
+        }
+
+        /* ŠTÍTKY (Tech stack) */
+        .tech-tags { margin-bottom: 15px; }
+        .tag {
+            display: inline-block;
+            background: #2d2d2d;
+            color: #aaa;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            border: 1px solid #444;
+        }
+
+        /* RESPONZIVITA PRO MOBILY */
+        @media (max-width: 768px) {
+            .hero-section, .coop-section { flex-direction: column; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .hero-image { width: 200px; height: 200px; margin: 0 auto; }
+            .coop-media { width: 100%; height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero-section">
+        <div class="hero-text">
+            <h1>Hi, I'm Adam Krčil</h1>
+            <h3>Unity Software Engineer</h3>
+            <p>I specialize in writing clean, scalable C# systems in Unity. From asynchronous backend communication and Dependency Injection to Garbage Collection optimization ensuring stable performance across mobile and VR platforms.</p>
+            <div class="tech-tags" style="margin-top: 20px;">
+                <span class="tag">C# Architecture</span>
+                <span class="tag">API Integration</span>
+                <span class="tag">GitFlow</span>
+            </div>
+            <a href="mailto:tvuj@email.cz" class="btn">Contact Me</a>
+            <a href="https://github.com/tvuj-profil" class="btn btn-outline" target="_blank">GitHub</a>
+            <a href="https://linkedin.com/in/tvuj-profil" class="btn btn-outline" target="_blank">LinkedIn</a>
+        </div>
+        <div class="hero-image">
+            [Your Photo / Avatar]
+        </div>
+    </header>
+
+    <section class="projects-grid">
+        <div class="project-card">
+            <h2>C# Architecture & Network Sandbox</h2>
+            <div class="tech-tags">
+                <span class="tag">VContainer (DI)</span>
+                <span class="tag">UniTask</span>
+                <span class="tag">REST API</span>
+            </div>
+            <p>A robust, modular system for backend REST API communication designed for mobile games. Replaced outdated Coroutines with asynchronous <code>UniTask</code> and <code>CancellationToken</code> for fail-safe network timeouts.</p>
+            <p>Implemented Dependency Injection via <strong>VContainer</strong>, utilizing Interfaces to fully decouple game logic from visual representation and enable easy server mocking.</p>
+            <a href="tech-detail.html" class="btn">Read Case Study</a>
+            <a href="https://github.com/tvuj-profil/tech-sandbox" class="btn btn-outline" target="_blank">Source Code</a>
+        </div>
+
+        <div class="project-card">
+            <h2>[Název VR Hry]</h2>
+            <div class="tech-tags">
+                <span class="tag">VR / OpenXR</span>
+                <span class="tag">Zero-GC</span>
+                <span class="tag">3D Math</span>
+            </div>
+            <p>Complete end-to-end development of a VR title from prototype to playable build. Addressed strict VR framerate constraints by implementing Zero-GC practices (O(1) Dictionary lookups, boxing prevention).</p>
+            <p>Decoupled core game logic from hardware inputs using event-driven architecture to ensure modularity and scalability.</p>
+            <a href="vr-detail.html" class="btn">Read Case Study</a>
+            <a href="https://github.com/tvuj-profil/vr-projekt" class="btn btn-outline" target="_blank">GitHub</a>
+        </div>
+    </section>
+
+    <section class="coop-section">
+        <div class="coop-text">
+            <h2>Commercial Cooperation</h2>
+            <h3 style="margin-bottom: 10px;">RZE Studio – Bukkakuu</h3>
+            <div class="tech-tags">
+                <span class="tag">Team Development</span>
+                <span class="tag">UI/UX</span>
+                <span class="tag">Core Loops</span>
+            </div>
+            <p><strong>Role:</strong> Unity Developer (Contract)</p>
+            <p>Commercial collaboration within a distributed team. Implemented UI systems and core gameplay loops based on design specifications.</p>
+            <p>Strictly adhered to industry-standard GitFlow. Managed feature branches, code reviews via Pull Requests, and utilized <code>git rebase</code> to maintain a clean, conflict-free commit history in Unity scenes.</p>
+        </div>
+        <div class="coop-media">
+            [GIF / Screenshot of Bukkakuu]
+        </div>
+    </section>
+
+</body>
+</html>
