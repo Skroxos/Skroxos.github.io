@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechSandbox | Adam Krčil</title>
+    <title>Drone Assembly Simulator | Adam Krčil</title>
     <style>
         body {
             margin: 0;
@@ -127,21 +127,6 @@
             flex-shrink: 0;
         }
 
-        .experiment-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-top: 20px;
-        }
-        .experiment-card {
-            background: #0d0d0d;
-            border: 1px solid #1a1a1a;
-            border-radius: 10px;
-            padding: 20px 22px;
-        }
-        .experiment-card h3 { font-size: 1rem; margin-bottom: 8px; }
-        .experiment-card p { font-size: 0.9rem; margin: 0; }
-
         .cta-row {
             display: flex;
             gap: 20px;
@@ -164,7 +149,6 @@
         @media (max-width: 700px) {
             .detail-header h1 { font-size: 2.4rem; }
             .hero-image { height: 240px; }
-            .experiment-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -177,11 +161,11 @@
     </nav>
 
     <header class="detail-header">
-        <div class="label">Playground &amp; Architecture</div>
-        <h1>TechSandbox</h1>
+        <div class="label">Solo End-to-End Project</div>
+        <h1>Drone Assembly Simulator</h1>
         <p class="subtitle">
-            My personal Unity playground &mdash; a living repository where I experiment with patterns, frameworks,
-            and systems before bringing them into production. No pressure to ship, full freedom to explore.
+            A fully self-developed Unity simulation where the player assembles a drone from components.
+            Every system &mdash; from validation logic to UI &mdash; built and owned entirely by me.
         </p>
 
         <div class="meta-row">
@@ -195,19 +179,18 @@
             </div>
             <div class="meta-item">
                 <span class="meta-label">Type</span>
-                <span class="meta-value">R&amp;D / Playground</span>
+                <span class="meta-value">Solo Project</span>
             </div>
             <div class="meta-item">
-                <span class="meta-label">Status</span>
-                <span class="meta-value">Ongoing</span>
+                <span class="meta-label">Ownership</span>
+                <span class="meta-value">Full Stack</span>
             </div>
         </div>
 
         <div class="tech-tags">
             <span class="tag">C#</span>
-            <span class="tag">VContainer</span>
-            <span class="tag">UniTask</span>
-            <span class="tag">REST API</span>
+            <span class="tag">Unity</span>
+            <span class="tag">Solo Project</span>
         </div>
     </header>
 
@@ -216,63 +199,49 @@
 <div class="container">
 
     <div class="hero-image">
-        <!-- <img src="img/techsandbox-preview.png" alt="TechSandbox preview"> -->
+        <!-- <img src="img/drone-preview.png" alt="Drone Assembly Simulator preview"> -->
         SCREENSHOT / GIF
     </div>
 
     <section class="content-section">
-        <h2>What Is TechSandbox?</h2>
+        <h2>Overview</h2>
         <p>
-            TechSandbox is not a game &mdash; it's a controlled environment where I prototype Unity systems and patterns
-            in isolation before they go anywhere near a real project. Think of it as an ongoing sketchbook for
-            architecture decisions and framework experiments.
+            Drone Assembly Simulator is a Unity project where the player builds a drone by selecting and placing
+            individual components. The simulation validates each assembly step &mdash; checking compatibility,
+            correct placement, and completeness before allowing progression.
         </p>
         <p>
-            Anything that survives here and proves itself gets extracted into actual production code. Anything that
-            doesn't? Still a useful lesson.
+            The entire project was built solo: from initial architecture decisions through to gameplay, UI, and
+            final polish. No templates, no teammates &mdash; full ownership of every line.
         </p>
     </section>
 
     <section class="content-section">
-        <h2>Current Focus: Async REST API Framework</h2>
-        <p>
-            The most developed module right now is a production-ready async networking layer replacing the old
-            Coroutine-based approach:
-        </p>
+        <h2>What I Built</h2>
         <ul class="detail-list">
-            <li>All network calls built on <code>UniTask</code> &mdash; non-blocking, zero-alloc async/await for Unity</li>
-            <li><code>CancellationToken</code> propagated through every request for clean cancellation on scene unload or timeout</li>
-            <li>Dependency injection via <strong>VContainer</strong> &mdash; services are registered and resolved without singletons</li>
-            <li>Typed response models with centralized error handling &mdash; no scattered null checks</li>
-            <li>Designed to be dropped into any Unity project as a self-contained module</li>
+            <li>Component validation system &mdash; runtime checks for compatibility and correct assembly order</li>
+            <li>Modular drone part system &mdash; each component defined by data, not hardcoded logic</li>
+            <li>UI feedback layer &mdash; communicates validation state clearly without cluttering the scene</li>
+            <li>State management &mdash; clean separation between assembly phases using a structured FSM</li>
+            <li>Scene architecture &mdash; designed for maintainability and easy extension with new parts</li>
         </ul>
     </section>
 
     <section class="content-section">
-        <h2>Other Experiments</h2>
-        <div class="experiment-grid">
-            <div class="experiment-card">
-                <h3>State Machines</h3>
-                <p>Testing different approaches to game state &mdash; hierarchical FSMs, scriptable object-based states, and event-driven transitions.</p>
-            </div>
-            <div class="experiment-card">
-                <h3>Zero-GC Patterns</h3>
-                <p>Benchmarking object pooling, struct vs class tradeoffs, and Dictionary lookup optimization for performance-critical paths.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <h2>Why It Matters</h2>
+        <h2>Challenges</h2>
         <p>
-            Having a dedicated sandbox means production code stays clean. Instead of experimenting directly in a live project
-            (and creating tech debt), I validate ideas here first &mdash; then bring only proven patterns across.
-            It's also an honest signal of how I think about engineering: deliberate, iterative, and documented.
+            The hardest part was designing the validation system to be data-driven rather than case-by-case.
+            Early versions had explicit checks per component type &mdash; which broke immediately when adding new parts.
+            Refactoring to a rule-based validator made the system dramatically more scalable and easier to test.
+        </p>
+        <p>
+            Working solo also meant making all architectural decisions without external review &mdash;
+            which forced a more deliberate and documented approach to every design choice.
         </p>
     </section>
 
     <div class="cta-row">
-        <a href="https://github.com/Skroxos/TechSandbox" target="_blank" class="btn btn-primary">View on GitHub</a>
+        <a href="https://github.com/Skroxos/Drone-Assembly-Simulator" target="_blank" class="btn btn-primary">View on GitHub</a>
         <a href="index.html" class="btn btn-secondary">&larr; Back to Portfolio</a>
     </div>
 
