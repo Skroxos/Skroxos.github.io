@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechSandbox | Adam Krčil</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #050505;
+            color: #a0a0a0;
+            line-height: 1.7;
+        }
+
+        h1, h2, h3 { color: #ffffff; margin: 0; }
+        a { text-decoration: none; }
+        code {
+            background: #151515;
+            border: 1px solid #222;
+            border-radius: 4px;
+            padding: 2px 7px;
+            font-size: 0.9em;
+            color: #ccc;
+        }
+
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* NAV BACK */
+        .top-nav {
+            padding: 28px 0 0;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #555;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: #fff; }
+
+        /* HEADER */
+        .detail-header {
+            padding: 60px 0 50px;
+            border-bottom: 1px solid #111;
+        }
+        .detail-header .label {
+            font-size: 0.85rem;
+            color: #4daafc;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        .detail-header h1 {
+            font-size: 3.5rem;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+        }
+        .detail-header .subtitle {
+            font-size: 1.2rem;
+            max-width: 640px;
+            margin-bottom: 36px;
+        }
+
+        /* Meta řádek */
+        .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            margin-bottom: 36px;
+        }
+        .meta-item { display: flex; flex-direction: column; gap: 4px; }
+        .meta-item .meta-label { font-size: 0.75rem; color: #444; text-transform: uppercase; letter-spacing: 1px; }
+        .meta-item .meta-value { font-size: 0.95rem; color: #bbb; }
+
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+        .tag { background: #151515; color: #888; padding: 6px 15px; border-radius: 4px; border: 1px solid #222; font-size: 0.85rem; }
+
+        /* Hero image */
+        .hero-image {
+            width: 100%;
+            height: 460px;
+            background: #0e0e0e;
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            margin: 56px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2a2a2a;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            overflow: hidden;
+        }
+        .hero-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Obsah */
+        .content-section {
+            padding: 56px 0;
+            border-bottom: 1px solid #0e0e0e;
+        }
+        .content-section:last-child { border-bottom: none; }
+
+        .content-section h2 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+        .content-section p {
+            font-size: 1.05rem;
+            margin-bottom: 16px;
+        }
+
+        ul.detail-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        ul.detail-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #0f0f0f;
+            font-size: 1.05rem;
+            display: flex;
+            gap: 14px;
+        }
+        ul.detail-list li::before {
+            content: "—";
+            color: #4daafc;
+            flex-shrink: 0;
+        }
+
+        /* Experiment karty */
+        .experiment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .experiment-card {
+            background: #0d0d0d;
+            border: 1px solid #1a1a1a;
+            border-radius: 10px;
+            padding: 20px 22px;
+        }
+        .experiment-card h3 { font-size: 1rem; margin-bottom: 8px; }
+        .experiment-card p { font-size: 0.9rem; margin: 0; }
+
+        /* CTA */
+        .cta-row {
+            display: flex;
+            gap: 20px;
+            padding: 56px 0 80px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn-primary { background: #fff; color: #000; }
+        .btn-primary:hover { background: #d0d0d0; transform: scale(1.03); }
+        .btn-secondary { background: transparent; color: #fff; border: 1px solid #444; }
+        .btn-secondary:hover { border-color: #fff; transform: scale(1.03); }
+
+        @media (max-width: 700px) {
+            .detail-header h1 { font-size: 2.4rem; }
+            .hero-image { height: 240px; }
+            .experiment-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <nav class="top-nav">
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+    </nav>
+
+    <header class="detail-header">
+        <div class="label">Playground &amp; Architecture</div>
+        <h1>TechSandbox</h1>
+        <p class="subtitle">
+            My personal Unity playground — a living repository where I experiment with patterns, frameworks,
+            and systems before bringing them into production. No pressure to ship, full freedom to explore.
+        </p>
+
+        <div class="meta-row">
+            <div class="meta-item">
+                <span class="meta-label">Engine</span>
+                <span class="meta-value">Unity</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Language</span>
+                <span class="meta-value">C# · ShaderLab · HLSL</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Type</span>
+                <span class="meta-value">R&amp;D / Playground</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Status</span>
+                <span class="meta-value">Ongoing</span>
+            </div>
+        </div>
+
+        <div class="tech-tags">
+            <span class="tag">C#</span>
+            <span class="tag">VContainer</span>
+            <span class="tag">UniTask</span>
+            <span class="tag">REST API</span>
+            <span class="tag">ShaderLab</span>
+            <span class="tag">HLSL</span>
+            <span class="tag">Wolfram Language</span>
+        </div>
+    </header>
+
+</div>
+
+<div class="container">
+
+    <div class="hero-image">
+        <!-- <img src="img/techsandbox-preview.png" alt="TechSandbox preview"> -->
+        SCREENSHOT / GIF
+    </div>
+
+    <section class="content-section">
+        <h2>What Is TechSandbox?</h2>
+        <p>
+            TechSandbox is not a game — it's a controlled environment where I prototype Unity systems and patterns
+            in isolation before they go anywhere near a real project. Think of it as an ongoing sketchbook for
+            architecture decisions, shader ideas, and framework experiments.
+        </p>
+        <p>
+            Anything that survives here and proves itself gets extracted into actual production code. Anything that
+            doesn't? Still a useful lesson.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>Current Focus: Async REST API Framework</h2>
+        <p>
+            The most developed module right now is a production-ready async networking layer replacing the old
+            Coroutine-based approach:
+        </p>
+        <ul class="detail-list">
+            <li>All network calls built on <code>UniTask</code> — non-blocking, zero-alloc async/await for Unity</li>
+            <li><code>CancellationToken</code> propagated through every request for clean cancellation on scene unload or timeout</li>
+            <li>Dependency injection via <strong>VContainer</strong> — services are registered and resolved without singletons</li>
+            <li>Typed response models with centralized error handling — no scattered null checks</li>
+            <li>Designed to be dropped into any Unity project as a self-contained module</li>
+        </ul>
+    </section>
+
+    <section class="content-section">
+        <h2>Other Experiments</h2>
+        <div class="experiment-grid">
+            <div class="experiment-card">
+                <h3>ShaderLab / HLSL</h3>
+                <p>Custom surface and unlit shaders. Exploring visual feedback patterns — highlights, dissolve effects, procedural animations.</p>
+            </div>
+            <div class="experiment-card">
+                <h3>Wolfram Language</h3>
+                <p>Mathematical prototyping and algorithm visualization before porting logic to C#. Used for rapid iteration on numeric systems.</p>
+            </div>
+            <div class="experiment-card">
+                <h3>State Machines</h3>
+                <p>Testing different approaches to game state — hierarchical FSMs, scriptable object-based states, and event-driven transitions.</p>
+            </div>
+            <div class="experiment-card">
+                <h3>Zero-GC Patterns</h3>
+                <p>Benchmarking object pooling, struct vs class tradeoffs, and Dictionary lookup optimization for performance-critical paths.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Why It Matters</h2>
+        <p>
+            Having a dedicated sandbox means production code stays clean. Instead of experimenting directly in a live project
+            (and creating tech debt), I validate ideas here first — then bring only proven patterns across.
+            It's also an honest signal of how I think about engineering: deliberate, iterative, and documented.
+        </p>
+    </section>
+
+    <div class="cta-row">
+        <a href="https://github.com/Skroxos/TechSandbox" target="_blank" class="btn btn-primary">View on GitHub</a>
+        <a href="index.html" class="btn btn-secondary">← Back to Portfolio</a>
+    </div>
+
+</div>
+
+</body>
+</html>
