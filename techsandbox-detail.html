@@ -109,7 +109,6 @@
             margin-bottom: 16px;
         }
 
-        /* OPRAVENÝ SEZNAM - ZAROVNÁNÍ */
         ul.detail-list {
             list-style: none;
             padding: 0;
@@ -133,7 +132,6 @@
             color: #eaeaea;
         }
 
-        /* 2x2 GRID PRO KÓD */
         .code-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -212,8 +210,8 @@
         <div class="label">Systems & Architecture</div>
         <h1>TechSandbox</h1>
         <p class="subtitle">
-            A living C# repository where I design, benchmark, and optimize advanced Unity systems. 
-            Focused on memory management, decoupled architecture, and high-performance algorithms before they scale into production.
+            A technical sandbox for designing, benchmarking, and optimizing advanced Unity systems. 
+            The main focus is on memory-safe C# architecture and high-performance algorithms before applying them to real-world games.
         </p>
 
         <div class="meta-row">
@@ -244,17 +242,17 @@
 <div class="container">
 
     <div class="hero-image">
-        SCREENSHOT / GIF (Ideálně Gizmos z Hashingu nebo EventBus z konzole)
+        SCREENSHOT / GIF (Ideálně z konzole nebo Gizmos ze scény)
     </div>
 
     <section class="content-section">
         <h2>The Philosophy</h2>
         <p>
-            TechSandbox is not a game project. It serves as a strict engineering environment for prototyping complex logic away from the clutter of a main project. 
-            The goal is simple: avoid "MonoBehaviour hell" and build pure, modular C# systems.
+            TechSandbox isn't a game project — it's an isolated environment where I experiment with new Unity features, C# design patterns, and different architectural concepts. 
+            It gives me the freedom to figure out how things work under the hood without the risk of breaking an actual game.
         </p>
         <p>
-            Every module here is built with the intention of being scalable, memory-safe, and easily injectable into any future project using Dependency Injection.
+            The main goal is hands-on learning. Whether I'm testing a new Dependency Injection setup, figuring out a specific system, or just doing trial-and-error, this is where I do the messy work before integrating the proven concepts into my real projects.
         </p>
     </section>
 
@@ -262,10 +260,10 @@
         <h2>Core Implementations</h2>
         <ul class="detail-list">
             <li><strong>Zero-GC Event Bus:</strong> A high-performance messaging system utilizing generic static routing and struct constraints to completely eliminate heap allocation (boxing).</li>
-            <li><strong>Spatial Hash Grid:</strong> O(1) optimized math-based grid for resolving proximity queries (e.g., finding nearby enemies) without relying on expensive Unity Physics colliders.</li>
-            <li><strong>MVP Inventory System:</strong> A fully modular crafting and inventory system built strictly on the Model-View-Presenter pattern, keeping UI completely decoupled from data.</li>
+            <li><strong>Spatial Hash Grid:</strong> O(1) optimized math-based grid for resolving proximity queries (e.g., finding nearby entities) without relying on expensive Unity Physics colliders.</li>
+            <li><strong>MVP Inventory System:</strong> A modular crafting and inventory system built strictly on the Model-View-Presenter pattern, keeping UI completely decoupled from data.</li>
             <li><strong>Dependency Injection (VContainer):</strong> Systems are wired up using DI, ensuring single-responsibility classes and easy unit testing without Singleton abuse.</li>
-            <li><strong>Async Workflows:</strong> Using <code>UniTask</code> for non-blocking API mock calls and <code>Addressables</code> for memory-safe asynchronous asset loading.</li>
+            <li><strong>Async Workflows:</strong> Using <code>UniTask</code> for non-blocking API mock calls and memory-safe asynchronous asset loading.</li>
         </ul>
     </section>
 
@@ -283,7 +281,7 @@
 public static class EventBus
 {
     // C# creates a unique class per T at compile time.
-    // O(1) routing, no dictionaries, no boxing.
+    // Fast routing, no dictionaries, no boxing.
     private static class EventContainer&lt;T&gt; where T : struct, IEvent
     {
         public static Action&lt;T&gt; OnEvent;
@@ -333,7 +331,7 @@ public class GameLifetimeScope : LifetimeScope
             </div>
 
             <div class="code-card">
-                <h3>4. UniTask & Addressables Integration</h3>
+                <h3>4. UniTask Async Integration</h3>
                 <pre><code>
 public async UniTask&lt;GameObject&gt; SpawnEntityAsync(string key, CancellationToken token)
 {
@@ -341,7 +339,7 @@ public async UniTask&lt;GameObject&gt; SpawnEntityAsync(string key, Cancellation
     var handle = Addressables.InstantiateAsync(key);
     var instance = await handle.WithCancellation(token);
     
-    // Inject into Object Pool...
+    // Inject into Object Pool architecture...
     return instance;
 }
                 </code></pre>
@@ -353,11 +351,11 @@ public async UniTask&lt;GameObject&gt; SpawnEntityAsync(string key, Cancellation
     <section class="content-section">
         <h2>Engineering Takeaways</h2>
         <p>
-            Building these systems in isolation has fundamentally improved how I approach C# within Unity. 
-            By stepping away from standard Unity tutorials and studying compiler behavior (like generic monomorphization for the Event Bus) or data-oriented design (Spatial Hashing), I am now able to write code that respects CPU cache and minimizes Garbage Collector spikes.
+            Working on this sandbox has shifted my focus from simply implementing features to understanding how they work under the hood. 
+            Taking the time to study underlying mechanics—such as how the Event Bus handles generics or how the Spatial Grid relies on math instead of physics—has fundamentally improved my approach to problem-solving.
         </p>
         <p>
-            This sandbox is proof that I don't just "make games work" — I engineer them to run efficiently.
+            It’s an ongoing learning process that continuously helps me write cleaner, more reliable, and better-structured code in my actual projects.
         </p>
     </section>
 
