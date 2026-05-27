@@ -109,22 +109,69 @@
             margin-bottom: 16px;
         }
 
+        /* OPRAVENÝ SEZNAM */
         ul.detail-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
         ul.detail-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid #0f0f0f;
+            padding: 12px 0 12px 24px; /* Odsazení zleva pro pomlčku */
+            border-bottom: 1px solid #111;
             font-size: 1.05rem;
-            display: flex;
-            gap: 14px;
+            position: relative; /* Důležité pro absolutní pozici pomlčky */
+            line-height: 1.6;
         }
         ul.detail-list li::before {
             content: "—";
             color: #4daafc;
-            flex-shrink: 0;
+            position: absolute;
+            left: 0;
+            top: 12px; /* Zarovnání s prvním řádkem textu */
+        }
+        ul.detail-list li strong {
+            color: #eaeaea; /* Mírně světlejší nadpis položky pro lepší čitelnost */
+        }
+
+        /* 2x2 GRID PRO KÓD */
+        .code-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 28px;
+        }
+        .code-card {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+        .code-card h3 {
+            font-size: 0.85rem;
+            color: #4daafc;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #1a1a1a;
+            padding-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .code-card pre {
+            margin: 0;
+            flex-grow: 1;
+            overflow-x: auto;
+            max-height: 240px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #333 #0a0a0a;
+        }
+        .code-card code {
+            background: transparent;
+            border: none;
+            padding: 0;
+            font-size: 0.85em;
+            color: #d1d1d1;
         }
 
         .cta-row {
@@ -146,9 +193,10 @@
         .btn-secondary { background: transparent; color: #fff; border: 1px solid #444; }
         .btn-secondary:hover { border-color: #fff; transform: scale(1.03); }
 
-        @media (max-width: 700px) {
+        @media (max-width: 768px) {
             .detail-header h1 { font-size: 2.4rem; }
             .hero-image { height: 240px; }
+            .code-grid { grid-template-columns: 1fr; } /* Na mobilu pod sebou */
         }
     </style>
 </head>
@@ -227,19 +275,92 @@
         </section>
 
         <section class="content-section">
-            <h2>Code Implementation</h2>
+            <h2>Full-Stack Implementation</h2>
             <p>
-                Below is an example of the clean, asynchronous approach used for communicating with the backend. 
-                Instead of relying on standard Coroutines, the system uses <code>UniTask</code> for zero-allocation asynchronous API calls.
+                A cross-section of the project's stack, demonstrating the flow from infrastructure deployment and automated testing down to the asynchronous C# client architecture.
             </p>
-            <pre><code>
-public async UniTask&lt;DroneData&gt; FetchDroneConfigAsync(string droneId, CancellationToken token)
-{
-    // Example placeholder for your actual clean API call
-    var response = await _networkService.GetAsync($"/api/drones/{droneId}", token);
-    return response.EnsureSuccess().Deserialize&lt;DroneData&gt;();
+            
+            <div class="code-grid">
+                
+                <div class="code-card">
+                    <h3>1. Azure Infrastructure (Terraform)</h3>
+                    <pre><code>
+# Creates the Azure Resource Group and SQL Server
+resource "azurerm_resource_group" "rg" {
+  name     = "rg-drone-sim"
+  location = "West Europe"
 }
-            </code></pre>
+
+resource "azurerm_mssql_server" "sql" {
+  name                         = "sql-drone-db"
+  resource_group_name          = azurerm_resource_group.rg.name
+  location                     = azurerm_resource_group.rg.location
+  version                      = "12.0"
+  administrator_login          = var.admin_user
+  administrator_login_password = var.admin_password
+}
+                    </code></pre>
+                </div>
+
+                <div class="code-card">
+                    <h3>2. CI & Secret Injection (YAML)</h3>
+                    <pre><code>
+jobs:
+  test_and_build:
+    runs-on: ubuntu-latest
+    steps:
+      # Injects secrets into a temporary Unity script
+      - name: Inject CI Secrets
+        run: |
+          echo "public static class Secrets { public const string API_KEY = \"${{ secrets.API_KEY }}\"; }" > Assets/Scripts/Secrets.cs
+          
+      - name: Run Unity Unit Tests
+        uses: game-ci/unity-test-runner@v2
+        with:
+          projectPath: ./
+          testMode: playmode
+                    </code></pre>
+                </div>
+
+                <div class="code-card">
+                    <h3>3. Async API Client (UniTask)</h3>
+                    <pre><code>
+public async UniTask&lt;DroneData&gt; FetchDroneConfigAsync(string id, CancellationToken token)
+{
+    using var request = UnityWebRequest.Get($"{ApiUrl}/drones/{id}");
+    request.SetRequestHeader("Authorization", $"Bearer {Secrets.API_KEY}");
+    
+    await request.SendWebRequest().WithCancellation(token);
+    
+    if (request.result != UnityWebRequest.Result.Success)
+        throw new Exception($"API Error: {request.error}");
+        
+    return JsonUtility.FromJson&lt;DroneData&gt;(request.downloadHandler.text);
+}
+                    </code></pre>
+                </div>
+
+                <div class="code-card">
+                    <h3>4. Validation Logic (Unit Test)</h3>
+                    <pre><code>
+[Test]
+public void ValidationSystem_Fails_When_BatteryIncompatible()
+{
+    // Arrange
+    var chassis = new ChassisData { MaxBatterySize = BatteryType.Medium };
+    var battery = new BatteryData { Type = BatteryType.Large };
+    var validator = new AssemblyValidator();
+
+    // Act
+    bool isValid = validator.CheckCompatibility(chassis, battery);
+
+    // Assert
+    Assert.IsFalse(isValid, "Large battery should not fit in medium chassis.");
+}
+                    </code></pre>
+                </div>
+
+            </div>
         </section>
 
         <section class="content-section">
