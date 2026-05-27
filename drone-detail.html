@@ -160,39 +160,41 @@
         <a href="index.html" class="back-link">&larr; Back to Portfolio</a>
     </nav>
 
-    <header class="detail-header">
-        <div class="label">Solo End-to-End Project</div>
-        <h1>Drone Assembly Simulator</h1>
-        <p class="subtitle">
-            A fully self-developed Unity simulation where the player assembles a drone from components.
-            Every system &mdash; from validation logic to UI &mdash; built and owned entirely by me.
-        </p>
+   <header class="detail-header">
+    <div class="label">Solo Full-Stack VR Project</div>
+    <h1>Drone Assembly Simulator</h1>
+    <p class="subtitle">
+        A comprehensive PC/VR simulation for drone assembly demonstrating production-ready development cycles. 
+        Features a Unity VR client connected to a custom PHP REST API, with automated CI pipelines and cloud infrastructure managed via Azure and Terraform.
+    </p>
 
-        <div class="meta-row">
-            <div class="meta-item">
-                <span class="meta-label">Engine</span>
-                <span class="meta-value">Unity</span>
-            </div>
-            <div class="meta-item">
-                <span class="meta-label">Language</span>
-                <span class="meta-value">C#</span>
-            </div>
-            <div class="meta-item">
-                <span class="meta-label">Type</span>
-                <span class="meta-value">Solo Project</span>
-            </div>
-            <div class="meta-item">
-                <span class="meta-label">Ownership</span>
-                <span class="meta-value">Full Stack</span>
-            </div>
+    <div class="meta-row">
+        <div class="meta-item">
+            <span class="meta-label">Client</span>
+            <span class="meta-value">Unity (C#) / VR</span>
         </div>
+        <div class="meta-item">
+            <span class="meta-label">Backend</span>
+            <span class="meta-value">PHP / REST API</span>
+        </div>
+        <div class="meta-item">
+            <span class="meta-label">Database</span>
+            <span class="meta-value">Azure SQL</span>
+        </div>
+        <div class="meta-item">
+            <span class="meta-label">DevOps</span>
+            <span class="meta-value">Terraform / CI Pipeline</span>
+        </div>
+    </div>
 
-        <div class="tech-tags">
-            <span class="tag">C#</span>
-            <span class="tag">Unity</span>
-            <span class="tag">Solo Project</span>
-        </div>
-    </header>
+    <div class="tech-tags">
+        <span class="tag">Unity VR</span>
+        <span class="tag">Azure</span>
+        <span class="tag">Terraform</span>
+        <span class="tag">CI/CD</span>
+        <span class="tag">Unit Testing</span>
+    </div>
+</header>
 
 </div>
 
@@ -204,41 +206,54 @@
     </div>
 
     <section class="content-section">
-        <h2>Overview</h2>
-        <p>
-            Drone Assembly Simulator is a Unity project where the player builds a drone by selecting and placing
-            individual components. The simulation validates each assembly step &mdash; checking compatibility,
-            correct placement, and completeness before allowing progression.
-        </p>
-        <p>
-            The entire project was built solo: from initial architecture decisions through to gameplay, UI, and
-            final polish. No templates, no teammates &mdash; full ownership of every line.
-        </p>
-    </section>
+    <h2>Overview</h2>
+    <p>
+        Drone Assembly Simulator is not just a local VR experience; it's a fully integrated full-stack application. 
+        While the player interacts with drone components in virtual reality, the project serves as a showcase of a complete production pipeline.
+    </p>
+    <p>
+        The goal was to move beyond simple Unity gameplay and implement a robust architecture that handles cloud data, automated testing, and Infrastructure as Code (IaC).
+    </p>
+</section>
 
-    <section class="content-section">
-        <h2>What I Built</h2>
-        <ul class="detail-list">
-            <li>Component validation system &mdash; runtime checks for compatibility and correct assembly order</li>
-            <li>Modular drone part system &mdash; each component defined by data, not hardcoded logic</li>
-            <li>UI feedback layer &mdash; communicates validation state clearly without cluttering the scene</li>
-            <li>State management &mdash; clean separation between assembly phases using a structured FSM</li>
-            <li>Scene architecture &mdash; designed for maintainability and easy extension with new parts</li>
-        </ul>
-    </section>
+<section class="content-section">
+    <h2>Architecture & Stack</h2>
+    <ul class="detail-list">
+        <li><strong>VR Client (Unity/C#):</strong> Clean architecture utilizing custom Editor Tools to accelerate development and Unit Tests to ensure logic stability.</li>
+        <li><strong>Backend Service (PHP):</strong> A custom REST API acting as a bridge between the VR client and the database.</li>
+        <li><strong>Cloud Database (Azure SQL):</strong> Secure and scalable data storage hosted on Microsoft Azure.</li>
+        <li><strong>DevOps (Terraform):</strong> Entire server infrastructure is defined and deployed through code (Infrastructure as Code) using Terraform.</li>
+        <li><strong>CI/CD Pipeline:</strong> Automated workflows that run Unit Tests and handle builds to prevent broken code from reaching production.</li>
+    </ul>
+</section>
 
-    <section class="content-section">
-        <h2>Challenges</h2>
-        <p>
-            The hardest part was designing the validation system to be data-driven rather than case-by-case.
-            Early versions had explicit checks per component type &mdash; which broke immediately when adding new parts.
-            Refactoring to a rule-based validator made the system dramatically more scalable and easier to test.
-        </p>
-        <p>
-            Working solo also meant making all architectural decisions without external review &mdash;
-            which forced a more deliberate and documented approach to every design choice.
-        </p>
-    </section>
+<section class="content-section">
+    <h2>Code Implementation</h2>
+    <p>
+        Below is an example of the clean, asynchronous approach used for communicating with the backend. 
+        Instead of relying on standard Coroutines, the system uses <code>UniTask</code> for zero-allocation asynchronous API calls.
+    </p>
+    <pre><code>
+public async UniTask&lt;DroneData&gt; FetchDroneConfigAsync(string droneId, CancellationToken token)
+{
+    // Example placeholder for your actual clean API call
+    var response = await _networkService.GetAsync($"/api/drones/{droneId}", token);
+    return response.EnsureSuccess().Deserialize&lt;DroneData&gt;();
+}
+    </code></pre>
+</section>
+
+<section class="content-section">
+    <h2>Challenges & Learning</h2>
+    <p>
+        The most significant technical hurdle was the context switch from pure game development to DevOps and cloud infrastructure. 
+        Configuring Terraform for an automated Azure deployment and ensuring the CI pipeline reliably executed Unity Unit Tests required deep research outside the standard game developer skill set.
+    </p>
+    <p>
+        This project fundamentally changed how I view software architecture. 
+        I learned that a solid CI/CD pipeline and automated testing are not just "nice to have" enterprise features, but critical tools that massively speed up iterative development, even for a solo developer.
+    </p>
+</section>
 
     <div class="cta-row">
         <a href="https://github.com/Skroxos/Drone-Assembly-Simulator" target="_blank" class="btn btn-primary">View on GitHub</a>
