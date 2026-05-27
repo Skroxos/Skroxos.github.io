@@ -109,38 +109,70 @@
             margin-bottom: 16px;
         }
 
+        /* OPRAVENÝ SEZNAM - ZAROVNÁNÍ */
         ul.detail-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
         ul.detail-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid #0f0f0f;
+            padding: 12px 0 12px 24px;
+            border-bottom: 1px solid #111;
             font-size: 1.05rem;
-            display: flex;
-            gap: 14px;
+            position: relative;
+            line-height: 1.6;
         }
         ul.detail-list li::before {
             content: "—";
             color: #4daafc;
-            flex-shrink: 0;
+            position: absolute;
+            left: 0;
+            top: 12px;
+        }
+        ul.detail-list li strong {
+            color: #eaeaea;
         }
 
-        .experiment-grid {
+        /* 2x2 GRID PRO KÓD */
+        .code-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-top: 20px;
+            gap: 20px;
+            margin-top: 28px;
         }
-        .experiment-card {
-            background: #0d0d0d;
+        .code-card {
+            background: #0a0a0a;
             border: 1px solid #1a1a1a;
-            border-radius: 10px;
-            padding: 20px 22px;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
         }
-        .experiment-card h3 { font-size: 1rem; margin-bottom: 8px; }
-        .experiment-card p { font-size: 0.9rem; margin: 0; }
+        .code-card h3 {
+            font-size: 0.85rem;
+            color: #4daafc;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #1a1a1a;
+            padding-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .code-card pre {
+            margin: 0;
+            flex-grow: 1;
+            overflow-x: auto;
+            max-height: 240px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #333 #0a0a0a;
+        }
+        .code-card code {
+            background: transparent;
+            border: none;
+            padding: 0;
+            font-size: 0.85em;
+            color: #d1d1d1;
+        }
 
         .cta-row {
             display: flex;
@@ -161,10 +193,10 @@
         .btn-secondary { background: transparent; color: #fff; border: 1px solid #444; }
         .btn-secondary:hover { border-color: #fff; transform: scale(1.03); }
 
-        @media (max-width: 700px) {
+        @media (max-width: 768px) {
             .detail-header h1 { font-size: 2.4rem; }
             .hero-image { height: 240px; }
-            .experiment-grid { grid-template-columns: 1fr; }
+            .code-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -177,37 +209,33 @@
     </nav>
 
     <header class="detail-header">
-        <div class="label">Playground &amp; Architecture</div>
+        <div class="label">Systems & Architecture</div>
         <h1>TechSandbox</h1>
         <p class="subtitle">
-            My personal Unity playground &mdash; a living repository where I experiment with patterns, frameworks,
-            and systems before bringing them into production. No pressure to ship, full freedom to explore.
+            A living C# repository where I design, benchmark, and optimize advanced Unity systems. 
+            Focused on memory management, decoupled architecture, and high-performance algorithms before they scale into production.
         </p>
 
         <div class="meta-row">
             <div class="meta-item">
-                <span class="meta-label">Engine</span>
-                <span class="meta-value">Unity</span>
+                <span class="meta-label">Environment</span>
+                <span class="meta-value">Unity (C#)</span>
             </div>
             <div class="meta-item">
-                <span class="meta-label">Language</span>
-                <span class="meta-value">C#</span>
+                <span class="meta-label">Focus</span>
+                <span class="meta-value">Clean Architecture</span>
             </div>
             <div class="meta-item">
-                <span class="meta-label">Type</span>
-                <span class="meta-value">R&amp;D / Playground</span>
-            </div>
-            <div class="meta-item">
-                <span class="meta-label">Status</span>
-                <span class="meta-value">Ongoing</span>
+                <span class="meta-label">Performance</span>
+                <span class="meta-value">Zero-GC Allocation</span>
             </div>
         </div>
 
         <div class="tech-tags">
-            <span class="tag">C#</span>
-            <span class="tag">VContainer</span>
+            <span class="tag">Zero-GC</span>
+            <span class="tag">VContainer (DI)</span>
+            <span class="tag">MVP Pattern</span>
             <span class="tag">UniTask</span>
-            <span class="tag">REST API</span>
         </div>
     </header>
 
@@ -216,58 +244,120 @@
 <div class="container">
 
     <div class="hero-image">
-        <!-- <img src="img/techsandbox-preview.png" alt="TechSandbox preview"> -->
-        SCREENSHOT / GIF
+        SCREENSHOT / GIF (Ideálně Gizmos z Hashingu nebo EventBus z konzole)
     </div>
 
     <section class="content-section">
-        <h2>What Is TechSandbox?</h2>
+        <h2>The Philosophy</h2>
         <p>
-            TechSandbox is not a game &mdash; it's a controlled environment where I prototype Unity systems and patterns
-            in isolation before they go anywhere near a real project. Think of it as an ongoing sketchbook for
-            architecture decisions and framework experiments.
+            TechSandbox is not a game project. It serves as a strict engineering environment for prototyping complex logic away from the clutter of a main project. 
+            The goal is simple: avoid "MonoBehaviour hell" and build pure, modular C# systems.
         </p>
         <p>
-            Anything that survives here and proves itself gets extracted into actual production code. Anything that
-            doesn't? Still a useful lesson.
+            Every module here is built with the intention of being scalable, memory-safe, and easily injectable into any future project using Dependency Injection.
         </p>
     </section>
 
     <section class="content-section">
-        <h2>Current Focus: Async REST API Framework</h2>
-        <p>
-            The most developed module right now is a production-ready async networking layer replacing the old
-            Coroutine-based approach:
-        </p>
+        <h2>Core Implementations</h2>
         <ul class="detail-list">
-            <li>All network calls built on <code>UniTask</code> &mdash; non-blocking, zero-alloc async/await for Unity</li>
-            <li><code>CancellationToken</code> propagated through every request for clean cancellation on scene unload or timeout</li>
-            <li>Dependency injection via <strong>VContainer</strong> &mdash; services are registered and resolved without singletons</li>
-            <li>Typed response models with centralized error handling &mdash; no scattered null checks</li>
-            <li>Designed to be dropped into any Unity project as a self-contained module</li>
+            <li><strong>Zero-GC Event Bus:</strong> A high-performance messaging system utilizing generic static routing and struct constraints to completely eliminate heap allocation (boxing).</li>
+            <li><strong>Spatial Hash Grid:</strong> O(1) optimized math-based grid for resolving proximity queries (e.g., finding nearby enemies) without relying on expensive Unity Physics colliders.</li>
+            <li><strong>MVP Inventory System:</strong> A fully modular crafting and inventory system built strictly on the Model-View-Presenter pattern, keeping UI completely decoupled from data.</li>
+            <li><strong>Dependency Injection (VContainer):</strong> Systems are wired up using DI, ensuring single-responsibility classes and easy unit testing without Singleton abuse.</li>
+            <li><strong>Async Workflows:</strong> Using <code>UniTask</code> for non-blocking API mock calls and <code>Addressables</code> for memory-safe asynchronous asset loading.</li>
         </ul>
     </section>
 
     <section class="content-section">
-        <h2>Other Experiments</h2>
-        <div class="experiment-grid">
-            <div class="experiment-card">
-                <h3>State Machines</h3>
-                <p>Testing different approaches to game state &mdash; hierarchical FSMs, scriptable object-based states, and event-driven transitions.</p>
+        <h2>Architecture Snippets</h2>
+        <p>
+            A quick look at how the core systems are structured, focusing on performance and readability.
+        </p>
+        
+        <div class="code-grid">
+            
+            <div class="code-card">
+                <h3>1. Zero-GC Event Bus (Struct Routing)</h3>
+                <pre><code>
+public static class EventBus
+{
+    // C# creates a unique class per T at compile time.
+    // O(1) routing, no dictionaries, no boxing.
+    private static class EventContainer&lt;T&gt; where T : struct, IEvent
+    {
+        public static Action&lt;T&gt; OnEvent;
+    }
+
+    public static void Publish&lt;T&gt;(T eventData) where T : struct, IEvent
+    {
+        EventContainer&lt;T&gt;.OnEvent?.Invoke(eventData);
+    }
+}
+                </code></pre>
             </div>
-            <div class="experiment-card">
-                <h3>Zero-GC Patterns</h3>
-                <p>Benchmarking object pooling, struct vs class tradeoffs, and Dictionary lookup optimization for performance-critical paths.</p>
+
+            <div class="code-card">
+                <h3>2. Spatial Hashing Grid Math</h3>
+                <pre><code>
+public int GetCellIndex(Vector3 worldPos)
+{
+    // Fast O(1) grid positioning without Physics bounds
+    int x = Mathf.FloorToInt(worldPos.x / _cellSize);
+    int z = Mathf.FloorToInt(worldPos.z / _cellSize);  
+
+    x = Mathf.Clamp(x, 0, _gridWidth - 1);
+    z = Mathf.Clamp(z, 0, _gridHeight - 1);
+
+    return x + (z * _gridWidth);
+}
+                </code></pre>
             </div>
+
+            <div class="code-card">
+                <h3>3. Dependency Injection (VContainer)</h3>
+                <pre><code>
+public class GameLifetimeScope : LifetimeScope
+{
+    protected override void Configure(IContainerBuilder builder)
+    {
+        // Core Logic
+        builder.Register&lt;InventoryModel&gt;(Lifetime.Singleton);
+        
+        // MVP Pattern Wiring
+        builder.Register&lt;InventoryPresenter&gt;(Lifetime.Scoped);
+        builder.RegisterComponentInHierarchy&lt;InventoryView&gt;();
+    }
+}
+                </code></pre>
+            </div>
+
+            <div class="code-card">
+                <h3>4. UniTask & Addressables Integration</h3>
+                <pre><code>
+public async UniTask&lt;GameObject&gt; SpawnEntityAsync(string key, CancellationToken token)
+{
+    // Zero-alloc async/await avoiding Coroutine overhead
+    var handle = Addressables.InstantiateAsync(key);
+    var instance = await handle.WithCancellation(token);
+    
+    // Inject into Object Pool...
+    return instance;
+}
+                </code></pre>
+            </div>
+
         </div>
     </section>
 
     <section class="content-section">
-        <h2>Why It Matters</h2>
+        <h2>Engineering Takeaways</h2>
         <p>
-            Having a dedicated sandbox means production code stays clean. Instead of experimenting directly in a live project
-            (and creating tech debt), I validate ideas here first &mdash; then bring only proven patterns across.
-            It's also an honest signal of how I think about engineering: deliberate, iterative, and documented.
+            Building these systems in isolation has fundamentally improved how I approach C# within Unity. 
+            By stepping away from standard Unity tutorials and studying compiler behavior (like generic monomorphization for the Event Bus) or data-oriented design (Spatial Hashing), I am now able to write code that respects CPU cache and minimizes Garbage Collector spikes.
+        </p>
+        <p>
+            This sandbox is proof that I don't just "make games work" — I engineer them to run efficiently.
         </p>
     </section>
 
