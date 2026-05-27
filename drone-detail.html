@@ -154,102 +154,113 @@
 </head>
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <nav class="top-nav">
-        <a href="index.html" class="back-link">&larr; Back to Portfolio</a>
-    </nav>
+        <nav class="top-nav">
+            <a href="index.html" class="back-link">&larr; Back to Portfolio</a>
+        </nav>
 
-   <header class="detail-header">
-    <div class="label">Solo Full-Stack VR Project</div>
-    <h1>Drone Assembly Simulator</h1>
-    <p class="subtitle">
-        A comprehensive PC/VR simulation for drone assembly demonstrating production-ready development cycles. 
-        Features a Unity VR client connected to a custom PHP REST API, with automated CI pipelines and cloud infrastructure managed via Azure and Terraform.
-    </p>
+        <header class="detail-header">
+            <div class="label">Solo Full-Stack VR Project</div>
+            <h1>Drone Assembly Simulator</h1>
+            <p class="subtitle">
+                A comprehensive PC/VR simulation for drone assembly demonstrating production-ready development cycles. 
+                Features a Unity VR client connected to a custom PHP REST API, with automated CI pipelines and cloud infrastructure managed via Azure and Terraform.
+            </p>
 
-   <div class="meta-row">
-        <div class="meta-item">
-            <span class="meta-label">DevOps</span>
-            <span class="meta-value">Terraform / CI Testing</span>
+            <div class="meta-row">
+                <div class="meta-item">
+                    <span class="meta-label">Client</span>
+                    <span class="meta-value">Unity (C#) / VR</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Backend</span>
+                    <span class="meta-value">PHP / REST API</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Database</span>
+                    <span class="meta-value">Azure SQL</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">DevOps</span>
+                    <span class="meta-value">Terraform / CI Testing</span>
+                </div>
+            </div>
+
+            <div class="tech-tags">
+                <span class="tag">Unity VR</span>
+                <span class="tag">Azure</span>
+                <span class="tag">Terraform</span>
+                <span class="tag">CI Pipeline</span>
+                <span class="tag">Secret Management</span>
+            </div>
+        </header>
+
+    </div>
+
+    <div class="container">
+
+        <div class="hero-image">
+            SCREENSHOT / GIF
         </div>
-    </div>
 
-    <div class="tech-tags">
-        <span class="tag">Unity VR</span>
-        <span class="tag">Azure</span>
-        <span class="tag">Terraform</span>
-        <span class="tag">CI Pipeline</span>
-        <span class="tag">Secret Management</span>
-    </div>
-</header>
+        <section class="content-section">
+            <h2>Overview</h2>
+            <p>
+                Drone Assembly Simulator is not just a local VR experience; it's a fully integrated full-stack application. 
+                While the player interacts with drone components in virtual reality, the project serves as a showcase of a complete production pipeline.
+            </p>
+            <p>
+                The goal was to move beyond simple Unity gameplay and implement a robust architecture that handles cloud data, automated testing, and Infrastructure as Code (IaC).
+            </p>
+        </section>
 
-</div>
+        <section class="content-section">
+            <h2>Architecture & Stack</h2>
+            <ul class="detail-list">
+                <li><strong>VR Client (Unity/C#):</strong> Clean architecture utilizing custom Editor Tools and comprehensive Unit Tests to ensure logic stability.</li>
+                <li><strong>Backend Service (PHP):</strong> A custom REST API acting as a bridge between the VR client and the database.</li>
+                <li><strong>Cloud Database (Azure SQL):</strong> Secure and scalable data storage hosted on Microsoft Azure.</li>
+                <li><strong>Infrastructure (Terraform):</strong> The Azure environment is defined and deployed through code (Infrastructure as Code).</li>
+                <li><strong>Continuous Integration (CI):</strong> Automated workflows utilizing a headless Unity client to execute Unit Tests. Includes secure secret injection, dynamically generating credential scripts only during the pipeline run to keep the repository strictly secure.</li>
+            </ul>
+        </section>
 
-<div class="container">
-
-    <div class="hero-image">
-        <!-- <img src="img/drone-preview.png" alt="Drone Assembly Simulator preview"> -->
-        SCREENSHOT / GIF
-    </div>
-
-    <section class="content-section">
-    <h2>Overview</h2>
-    <p>
-        Drone Assembly Simulator is not just a local VR experience; it's a fully integrated full-stack application. 
-        While the player interacts with drone components in virtual reality, the project serves as a showcase of a complete production pipeline.
-    </p>
-    <p>
-        The goal was to move beyond simple Unity gameplay and implement a robust architecture that handles cloud data, automated testing, and Infrastructure as Code (IaC).
-    </p>
-</section>
-
-<section class="content-section">
-    <h2>Architecture & Stack</h2>
-    <ul class="detail-list">
-        <li><strong>VR Client (Unity/C#):</strong> Clean architecture utilizing custom Editor Tools and comprehensive Unit Tests to ensure logic stability.</li>
-        <li><strong>Backend Service (PHP):</strong> A custom REST API acting as a bridge between the VR client and the database.</li>
-        <li><strong>Cloud Database (Azure SQL):</strong> Secure and scalable data storage hosted on Microsoft Azure.</li>
-        <li><strong>Infrastructure (Terraform):</strong> The Azure environment is defined and deployed through code (Infrastructure as Code).</li>
-        <li><strong>Continuous Integration (CI):</strong> Automated workflows utilizing a headless Unity client to execute Unit Tests. Includes secure secret injection, dynamically generating credential scripts only during the pipeline run to keep the repository strictly secure.</li>
-    </ul>
-</section>
-
-<section class="content-section">
-    <h2>Code Implementation</h2>
-    <p>
-        Below is an example of the clean, asynchronous approach used for communicating with the backend. 
-        Instead of relying on standard Coroutines, the system uses <code>UniTask</code> for zero-allocation asynchronous API calls.
-    </p>
-    <pre><code>
+        <section class="content-section">
+            <h2>Code Implementation</h2>
+            <p>
+                Below is an example of the clean, asynchronous approach used for communicating with the backend. 
+                Instead of relying on standard Coroutines, the system uses <code>UniTask</code> for zero-allocation asynchronous API calls.
+            </p>
+            <pre><code>
 public async UniTask&lt;DroneData&gt; FetchDroneConfigAsync(string droneId, CancellationToken token)
 {
     // Example placeholder for your actual clean API call
     var response = await _networkService.GetAsync($"/api/drones/{droneId}", token);
     return response.EnsureSuccess().Deserialize&lt;DroneData&gt;();
 }
-    </code></pre>
-</section>
+            </code></pre>
+        </section>
 
-<section class="content-section">
-    <h2>Challenges & Learning</h2>
-    <p>
-        The most significant technical hurdle was bridging pure game development with DevOps security practices. 
-        Setting up a headless mock Unity client within the CI pipeline to reliably run tests was complex, but the real challenge was implementing a secure Secret Management system. 
-        Ensuring that API keys and Azure credentials were dynamically injected into the pipeline without ever being exposed in the version control required a deep dive into secure CI workflows.
-    </p>
-    <p>
-        This project fundamentally changed how I view software architecture. 
-        I learned that automated testing and strict infrastructure security (like Terraform and Secret Injection) are critical engineering practices that stabilize development, even for a solo developer.
-    </p>
-</section>
+        <section class="content-section">
+            <h2>Challenges & Learning</h2>
+            <p>
+                The most significant technical hurdle was bridging pure game development with DevOps security practices. 
+                Setting up a headless mock Unity client within the CI pipeline to reliably run tests was complex, but the real challenge was implementing a secure Secret Management system. 
+                Ensuring that API keys and Azure credentials were dynamically injected into the pipeline without ever being exposed in the version control required a deep dive into secure CI workflows.
+            </p>
+            <p>
+                This project fundamentally changed how I view software architecture. 
+                I learned that automated testing and strict infrastructure security (like Terraform and Secret Injection) are critical engineering practices that stabilize development, even for a solo developer.
+            </p>
+        </section>
 
-    <div class="cta-row">
-        <a href="https://github.com/Skroxos/Drone-Assembly-Simulator" target="_blank" class="btn btn-primary">View on GitHub</a>
-        <a href="index.html" class="btn btn-secondary">&larr; Back to Portfolio</a>
+        <div class="cta-row">
+            <a href="https://github.com/Skroxos/Drone-Assembly-Simulator" target="_blank" class="btn btn-primary">View on GitHub</a>
+            <a href="index.html" class="btn btn-secondary">&larr; Back to Portfolio</a>
+        </div>
+
     </div>
-
-</div>
 
 </body>
 </html>
