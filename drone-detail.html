@@ -168,22 +168,10 @@
         Features a Unity VR client connected to a custom PHP REST API, with automated CI pipelines and cloud infrastructure managed via Azure and Terraform.
     </p>
 
-    <div class="meta-row">
-        <div class="meta-item">
-            <span class="meta-label">Client</span>
-            <span class="meta-value">Unity (C#) / VR</span>
-        </div>
-        <div class="meta-item">
-            <span class="meta-label">Backend</span>
-            <span class="meta-value">PHP / REST API</span>
-        </div>
-        <div class="meta-item">
-            <span class="meta-label">Database</span>
-            <span class="meta-value">Azure SQL</span>
-        </div>
+   <div class="meta-row">
         <div class="meta-item">
             <span class="meta-label">DevOps</span>
-            <span class="meta-value">Terraform / CI Pipeline</span>
+            <span class="meta-value">Terraform / CI Testing</span>
         </div>
     </div>
 
@@ -191,8 +179,8 @@
         <span class="tag">Unity VR</span>
         <span class="tag">Azure</span>
         <span class="tag">Terraform</span>
-        <span class="tag">CI/CD</span>
-        <span class="tag">Unit Testing</span>
+        <span class="tag">CI Pipeline</span>
+        <span class="tag">Secret Management</span>
     </div>
 </header>
 
@@ -219,11 +207,11 @@
 <section class="content-section">
     <h2>Architecture & Stack</h2>
     <ul class="detail-list">
-        <li><strong>VR Client (Unity/C#):</strong> Clean architecture utilizing custom Editor Tools to accelerate development and Unit Tests to ensure logic stability.</li>
+        <li><strong>VR Client (Unity/C#):</strong> Clean architecture utilizing custom Editor Tools and comprehensive Unit Tests to ensure logic stability.</li>
         <li><strong>Backend Service (PHP):</strong> A custom REST API acting as a bridge between the VR client and the database.</li>
         <li><strong>Cloud Database (Azure SQL):</strong> Secure and scalable data storage hosted on Microsoft Azure.</li>
-        <li><strong>DevOps (Terraform):</strong> Entire server infrastructure is defined and deployed through code (Infrastructure as Code) using Terraform.</li>
-        <li><strong>CI/CD Pipeline:</strong> Automated workflows that run Unit Tests and handle builds to prevent broken code from reaching production.</li>
+        <li><strong>Infrastructure (Terraform):</strong> The Azure environment is defined and deployed through code (Infrastructure as Code).</li>
+        <li><strong>Continuous Integration (CI):</strong> Automated workflows utilizing a headless Unity client to execute Unit Tests. Includes secure secret injection, dynamically generating credential scripts only during the pipeline run to keep the repository strictly secure.</li>
     </ul>
 </section>
 
@@ -246,12 +234,13 @@ public async UniTask&lt;DroneData&gt; FetchDroneConfigAsync(string droneId, Canc
 <section class="content-section">
     <h2>Challenges & Learning</h2>
     <p>
-        The most significant technical hurdle was the context switch from pure game development to DevOps and cloud infrastructure. 
-        Configuring Terraform for an automated Azure deployment and ensuring the CI pipeline reliably executed Unity Unit Tests required deep research outside the standard game developer skill set.
+        The most significant technical hurdle was bridging pure game development with DevOps security practices. 
+        Setting up a headless mock Unity client within the CI pipeline to reliably run tests was complex, but the real challenge was implementing a secure Secret Management system. 
+        Ensuring that API keys and Azure credentials were dynamically injected into the pipeline without ever being exposed in the version control required a deep dive into secure CI workflows.
     </p>
     <p>
         This project fundamentally changed how I view software architecture. 
-        I learned that a solid CI/CD pipeline and automated testing are not just "nice to have" enterprise features, but critical tools that massively speed up iterative development, even for a solo developer.
+        I learned that automated testing and strict infrastructure security (like Terraform and Secret Injection) are critical engineering practices that stabilize development, even for a solo developer.
     </p>
 </section>
 
