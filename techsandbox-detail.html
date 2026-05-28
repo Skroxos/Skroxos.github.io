@@ -278,9 +278,6 @@
             <div class="code-card">
                 <h3>1. Zero-GC Event Bus (Struct Routing)</h3>
                 <pre><code>
-using System;
-using System.Collections.Generic;
-
 public static class EventBus
 {
     private static readonly Dictionary<Type, object> _subscribers = new Dictionary<Type, object>();
@@ -334,9 +331,6 @@ public static class EventBus
             <div class="code-card">
                 <h3>2. Spatial Hashing Grid Math</h3>
                 <pre><code>
-using System.Collections.Generic;
-using UnityEngine;
-
 public class Grid
 {
     private readonly int _gridWidth;
@@ -461,33 +455,178 @@ public class Grid
             <div class="code-card">
                 <h3>3. Dependency Injection (VContainer)</h3>
                 <pre><code>
-public class GameLifetimeScope : LifetimeScope
+public class GameLifeTimeScope : LifetimeScope
 {
+    [SerializeField] private InventoryView inventoryView;
     protected override void Configure(IContainerBuilder builder)
     {
-        // Core Logic
-        builder.Register&lt;InventoryModel&gt;(Lifetime.Singleton);
-        
-        // MVP Pattern Wiring
-        builder.Register&lt;InventoryPresenter&gt;(Lifetime.Scoped);
-        builder.RegisterComponentInHierarchy&lt;InventoryView&gt;();
+        builder.RegisterInventorySystem();
+        builder.RegisterCraftingSystem();
+        builder.RegisterComponent(inventoryView);
+
+        builder.RegisterComponentInHierarchy<PlayerInventoryController>();
     }
 }
                 </code></pre>
             </div>
 
             <div class="code-card">
-                <h3>4. UniTask Async Integration</h3>
+                <h3>4. MVP Pattern (Inventory Model)P </h3>
                 <pre><code>
-public async UniTask&lt;GameObject&gt; SpawnEntityAsync(string key, CancellationToken token)
-{
-    // Zero-alloc async/await avoiding Coroutine overhead
-    var handle = Addressables.InstantiateAsync(key);
-    var instance = await handle.WithCancellation(token);
+                    
+    public class InventoryModel
+    {
+      private ItemSlot[] itemSlots;
+      private Dictionary<int, int> itemDictionary = new Dictionary<int, int>();
+      public event Action<int,Sprite,int> OnInventoryChanged;
+
+        public InventoryModel(int size)
+        {
+            itemSlots = new ItemSlot[size];
+            itemDictionary = new Dictionary<int, int>();
+            for (int i = 0; i < size; i++)
+            {
+                itemSlots[i] = new ItemSlot { slotID = i };
+            }
+        }
+
+
+        public bool AddItem(ItemSO item, int quantity)
+            {
+            if (item == null || quantity <= 0) return false;
+            int remainingQuantity = quantity;
+            if (item.isStackable)
+            {
+                remainingQuantity = FillExistingStacks(item, remainingQuantity);
+            }
+            if (remainingQuantity > 0)
+            {
+                remainingQuantity = FillEmptySlots(item, remainingQuantity);
+            }
+            return remainingQuantity == 0;
+
+        }
+
+
+        public bool RemoveItem(ItemSO item, int quantity)
+        {
+            if (!HasItem(item.itemID))
+            {
+                return false;
+            }
+            int remainingQuantity = RemoveQuantity(item, quantity);
+            if (remainingQuantity > 0)
+            {
+                RemoveFromSlots(item, remainingQuantity);
+            }
+            return true;
+        }
+
+
+        public bool HasItemForCrafting(int itemID, int quantity)
+        {
+            return itemDictionary.ContainsKey(itemID) && itemDictionary[itemID] >= quantity;
+        }
+
+
+
+
+
+
     
-    // Inject into Object Pool architecture...
-    return instance;
-}
+        private int RemoveQuantity(ItemSO item, int quantity)
+        {
+        return Mathf.Min(quantity, itemDictionary[item.itemID]);
+        }
+
+        private bool HasItem(int itemID)
+        {
+            return itemDictionary.ContainsKey(itemID) && itemDictionary[itemID] > 0;
+        }
+
+        private void RemoveFromSlots(ItemSO item, int quantity)
+        {
+            int remainingQuantity = quantity;
+            for (int i = itemSlots.Length - 1; i >= 0 && remainingQuantity > 0; i--)
+            {
+                ItemSlot slot = itemSlots[i];
+                if (slot.IsEmpty || slot.item.itemID != item.itemID) continue;
+                int quantityToRemove = Mathf.Min(slot.quantity, remainingQuantity);
+                slot.quantity -= quantityToRemove;
+                remainingQuantity -= quantityToRemove;
+                RemoveFromDictionary(item, quantityToRemove);
+                OnInventoryChanged?.Invoke(i, item.itemIcon, slot.quantity);
+                if (slot.quantity <= 0)
+                {
+                    slot.item = null;
+                    slot.quantity = 0;
+                    OnInventoryChanged?.Invoke(i, null, 0);
+                }
+            }
+        }
+
+        private int FillExistingStacks(ItemSO item, int amount)
+        {
+            for (int i = 0; i < itemSlots.Length && amount > 0; i++)
+            {
+                ItemSlot slot = itemSlots[i];
+
+                if (slot.IsEmpty || slot.item.itemID != item.itemID || slot.IsFull) continue;
+
+                int availableSpace = item.maxStackSize - slot.quantity;
+                int quantityToAdd = Mathf.Min(availableSpace, amount);
+
+                slot.quantity += quantityToAdd;
+                amount -= quantityToAdd;
+                AddToDictionary(item, quantityToAdd);
+                OnInventoryChanged?.Invoke(i, item.itemIcon, slot.quantity);
+            }
+            return amount;
+        }
+        
+        private int FillEmptySlots(ItemSO item, int amount)
+        {
+            for (int i = 0; i < itemSlots.Length && amount > 0; i++)
+            {
+                ItemSlot slot = itemSlots[i];
+                if (!slot.IsEmpty) continue;
+                int quantityToAdd = item.isStackable ? Mathf.Min(item.maxStackSize, amount) : 1;
+                slot.item = item;
+                slot.quantity = quantityToAdd;
+                amount -= quantityToAdd;
+                AddToDictionary(item, quantityToAdd);
+                OnInventoryChanged?.Invoke(i, item.itemIcon, slot.quantity);
+            }
+            return amount;
+        }
+
+
+        private void AddToDictionary(ItemSO item, int quantity)
+        {
+            if (itemDictionary.ContainsKey(item.itemID))
+            {
+                itemDictionary[item.itemID] += quantity;
+            }
+            else
+            {
+                itemDictionary.Add(item.itemID, quantity);
+            }
+        }
+
+        private void RemoveFromDictionary(ItemSO item, int quantity)
+        {
+            if (itemDictionary.ContainsKey(item.itemID))
+            {
+                itemDictionary[item.itemID] -= quantity;
+                if (itemDictionary[item.itemID] <= 0)
+                {
+                    itemDictionary.Remove(item.itemID);
+                }
+            }
+        }
+    }
+
+
                 </code></pre>
             </div>
 
