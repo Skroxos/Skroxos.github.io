@@ -280,62 +280,101 @@
                 A cross-section of the project's stack, demonstrating the flow from infrastructure deployment and automated testing down to the asynchronous C# client architecture.
             </p>
             
-            <div class="code-grid">
+           <div class="code-grid">
                 
                 <div class="code-card">
                     <h3>1. Azure Infrastructure (Terraform)</h3>
                     <pre><code>
-# Creates the Azure Resource Group and SQL Server
-resource "azurerm_resource_group" "rg" {
-  name     = "rg-drone-sim"
-  location = "West Europe"
+resource "azurerm_resource_group" "vr_rg" {
+  name     = "DroneAssembly2-VR-RG"
+  location = "polandcentral"
 }
 
-resource "azurerm_mssql_server" "sql" {
-  name                         = "sql-drone-db"
-  resource_group_name          = azurerm_resource_group.rg.name
-  location                     = azurerm_resource_group.rg.location
-  version                      = "12.0"
-  administrator_login          = var.admin_user
-  administrator_login_password = var.admin_password
+resource "azurerm_linux_web_app" "vr_app" {
+  name                = "drone-vr-app-chroustek"
+  resource_group_name = azurerm_resource_group.vr_rg.name
+  # ... app service plan definition omitted ...
+
+  site_config {
+    application_stack { php_version = "8.2" }
+  }
+
+  app_settings = {
+    "DB_HOST"    = azurerm_mysql_flexible_server.vr_mysql.fqdn
+    "SECRET_KEY" = var.secret_key
+    # ... remaining database credentials omitted ...
+  }
 }
+
+# ... MySQL Flexible Server, Database, Firewall, and SSL config omitted ...
                     </code></pre>
                 </div>
 
                 <div class="code-card">
                     <h3>2. CI & Secret Injection (YAML)</h3>
                     <pre><code>
+name: Unity Test Runner
+on: [push, pull_request]
+
 jobs:
-  test_and_build:
+  run-tests:
     runs-on: ubuntu-latest
     steps:
-      # Injects secrets into a temporary Unity script
-      - name: Inject CI Secrets
+      - uses: actions/checkout@v4
+
+      - name: Generate secret script
+        env:
+          SECRET_FILE_CONTENT: ${{ secrets.SECRET_CS_CONTENT }}
         run: |
-          echo "public static class Secrets { public const string API_KEY = \"${{ secrets.API_KEY }}\"; }" > Assets/Scripts/Secrets.cs
+          mkdir -p Assets/RegularGame/Scripts/DataBase/Secrets
+          echo "$SECRET_FILE_CONTENT" > Assets/RegularGame/Scripts/DataBase/Secrets/Secret.cs
           
-      - name: Run Unity Unit Tests
-        uses: game-ci/unity-test-runner@v2
+      - name: Run Tests
+        uses: game-ci/unity-test-runner@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          # ... unity email and password omitted ...
         with:
-          projectPath: ./
-          testMode: playmode
+          projectPath: ./ 
+          testMode: all
                     </code></pre>
                 </div>
 
                 <div class="code-card">
                     <h3>3. Async API Client (UniTask)</h3>
                     <pre><code>
-public async UniTask&lt;DroneData&gt; FetchDroneConfigAsync(string id, CancellationToken token)
+namespace DroneAssembly.DataBase
 {
-    using var request = UnityWebRequest.Get($"{ApiUrl}/drones/{id}");
-    request.SetRequestHeader("Authorization", $"Bearer {Secrets.API_KEY}");
-    
-    await request.SendWebRequest().WithCancellation(token);
-    
-    if (request.result != UnityWebRequest.Result.Success)
-        throw new Exception($"API Error: {request.error}");
-        
-    return JsonUtility.FromJson&lt;DroneData&gt;(request.downloadHandler.text);
+    public class LeaderboardAPI : INetworkService
+    {
+        private string _saveScoreURL => Secrets.Secret.SaveScoreURL;
+
+        public async UniTask&lt;bool&gt; SendPlayerDataAsync(string playerName, float time)
+        {
+            string jsonPayload = PreparePostData(playerName, time);
+            
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(60));
+            using UnityWebRequest request = new UnityWebRequest(_saveScoreURL, "POST");
+            
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonPayload);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            try
+            {
+                await request.SendWebRequest().ToUniTask(cancellationToken: cts.Token);
+                return request.responseCode == 200 || request.responseCode == 201;
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.LogError("Time Limit Reached (Timeout)");
+                return false;
+            }
+            // ... remaining error handling omitted ...
+        }
+
+        // ... FetchDataAsync() and GenerateSHA256() omitted for brevity ...
+    }
 }
                     </code></pre>
                 </div>
@@ -343,25 +382,42 @@ public async UniTask&lt;DroneData&gt; FetchDroneConfigAsync(string id, Cancellat
                 <div class="code-card">
                     <h3>4. Validation Logic (Unit Test)</h3>
                     <pre><code>
-[Test]
-public void ValidationSystem_Fails_When_BatteryIncompatible()
+public class SocketStepValidationTest
 {
-    // Arrange
-    var chassis = new ChassisData { MaxBatterySize = BatteryType.Medium };
-    var battery = new BatteryData { Type = BatteryType.Large };
-    var validator = new AssemblyValidator();
+    private SocketStepValidationSO _socketStepValidationSO;
+    private SocketIDSO _propellerID, _bellID;
 
-    // Act
-    bool isValid = validator.CheckCompatibility(chassis, battery);
+    [SetUp]
+    public void Setup()
+    {
+        _socketStepValidationSO = ScriptableObject.CreateInstance&lt;SocketStepValidationSO&gt;();
+        _propellerID = ScriptableObject.CreateInstance&lt;SocketIDSO&gt;();
+        _propellerID.name = "Propeller";
+        // ... remaining Setup & TearDown omitted ...
+    }
 
-    // Assert
-    Assert.IsFalse(isValid, "Large battery should not fit in medium chassis.");
+    [Test]
+    public void IsSocketAllowed_WhenSocketIsInAllowedList_ReturnsTrue()
+    {
+        _socketStepValidationSO.UpdateAllowedSockets(new List&lt;SocketIDSO&gt; { _propellerID });
+        Assert.IsTrue(_socketStepValidationSO.IsSocketAllowed(_propellerID));
+    }
+
+    [Test]
+    public void UpdateAllowedSockets_ClearsPreviousSockets()
+    {
+        _socketStepValidationSO.UpdateAllowedSockets(new List&lt;SocketIDSO&gt; { _propellerID });
+        // ... updates the allowed list with a new item ...
+        _socketStepValidationSO.UpdateAllowedSockets(new List&lt;SocketIDSO&gt; { _bellID });
+        
+        Assert.IsFalse(_socketStepValidationSO.IsSocketAllowed(_propellerID));
+    }
 }
                     </code></pre>
                 </div>
 
             </div>
-        </section>
+             </section>
 
         <section class="content-section">
             <h2>Challenges & Learning</h2>
