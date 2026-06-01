@@ -115,11 +115,20 @@
         .hero h1 {
             font-size: clamp(3rem, 8vw, 5.5rem);
             letter-spacing: -3px;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             background: linear-gradient(160deg, var(--text) 35%, var(--accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+
+        .hero-location {
+            font-size: 0.78rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            opacity: 0.6;
+            margin-bottom: 20px;
         }
 
         .hero h2 {
@@ -421,6 +430,7 @@
     <header class="hero">
         <div class="hero-bg"></div>
         <h1>Adam Krčil</h1>
+        <div class="hero-location">Ústí nad Labem, Czech Republic</div>
         <h2>Unity Software Engineer</h2>
         <p>Building clean, scalable C# systems in Unity. Specialized in deep performance optimization, memory management, and robust architecture for PC and VR.</p>
         <div class="btn-group">
@@ -453,18 +463,18 @@
     <section>
         <div class="showcase-row fade-up">
             <div class="showcase-text">
-               <h3>Solo Full-Stack VR Project</h3>
-<h2>Drone Assembly Simulator</h2>
-<p>
-    A comprehensive VR simulation for drone assembly, featuring a robust component validation system. 
-    Developed entirely from scratch, this project connects a Unity VR client to a cloud backend, utilizing automated CI pipelines and Azure deployment. 
-    Built with a strict focus on clean, maintainable C# architecture.
-</p>
-<div class="tech-tags">
-    <span class="tag">C# & Unity VR</span>
-    <span class="tag">Azure & Terraform</span>
-    <span class="tag">CI / CD</span>
-</div>
+                <h3>Solo Full-Stack VR Project</h3>
+                <h2>Drone Assembly Simulator</h2>
+                <p>
+                    A comprehensive VR simulation for drone assembly, featuring a robust component validation system. 
+                    Developed entirely from scratch, this project connects a Unity VR client to a cloud backend, utilizing automated CI pipelines and Azure deployment. 
+                    Built with a strict focus on clean, maintainable C# architecture.
+                </p>
+                <div class="tech-tags">
+                    <span class="tag">C# & Unity VR</span>
+                    <span class="tag">Azure & Terraform</span>
+                    <span class="tag">CI / CD</span>
+                </div>
                 <div class="link-group">
                     <a href="drone-detail.html" class="read-link">Read Case Study <span>&rarr;</span></a>
                     <a href="https://github.com/Skroxos/Drone-Assembly-Simulator" target="_blank" class="repo-link">GitHub <span>&nearr;</span></a>
@@ -482,23 +492,23 @@
     <section>
         <div class="showcase-row reverse fade-up">
             <div class="showcase-text">
-               <h3>Systems & Architecture Sandbox</h3>
-<h2>TechSandbox</h2>
-<p>
-    My personal environment for testing advanced Unity architecture and C# design patterns before bringing them into production projects.
-</p>
-<p>
-    <strong>Core implementations include:</strong>
-    <br>- A Zero-GC Event Bus utilizing structs.
-    <br>- Spatial Hashing and AI State Machines.
-    <br>- A modular MVP Inventory & Crafting system.
-    <br>- Mock asynchronous APIs (UniTask) and Addressables integration.
-</p>
-<div class="tech-tags">
-    <span class="tag">Clean Architecture</span>
-    <span class="tag">Zero-GC</span>
-    <span class="tag">Dependency Injection</span>
-</div>
+                <h3>Systems & Architecture Sandbox</h3>
+                <h2>TechSandbox</h2>
+                <p>
+                    My personal environment for testing advanced Unity architecture and C# design patterns before bringing them into production projects.
+                </p>
+                <p>
+                    <strong>Core implementations include:</strong>
+                    <br>- A Zero-GC Event Bus utilizing structs.
+                    <br>- Spatial Hashing and AI State Machines.
+                    <br>- A modular MVP Inventory & Crafting system.
+                    <br>- Mock asynchronous APIs (UniTask) and Addressables integration.
+                </p>
+                <div class="tech-tags">
+                    <span class="tag">Clean Architecture</span>
+                    <span class="tag">Zero-GC</span>
+                    <span class="tag">Dependency Injection</span>
+                </div>
                 <div class="link-group">
                     <a href="techsandbox-detail.html" class="read-link">Read Case Study <span>&rarr;</span></a>
                     <a href="https://github.com/Skroxos/TechSandbox" target="_blank" class="repo-link">GitHub <span>&nearr;</span></a>
@@ -517,20 +527,20 @@
         <div class="showcase-row fade-up" style="border-bottom: none;">
             <div class="showcase-text">
                 <h3>Indie Title</h3>
-<h2>Bukkaku</h2>
-<div class="team-info">
-    <div class="team-item"><strong>Role:</strong> Sole Programmer</div>
-    <div class="team-item"><strong>Team:</strong> 2 (Programmer & Artist/Designer)</div>
-</div>
-<p>
-    An indie game in active development. As the sole programmer collaborating directly with the studio founder/artist, my main focus is overhauling the game's architecture and refactoring legacy code into a stable, maintainable state. I handle all technical implementation, bridging the gap between design vision and functional gameplay systems while keeping a clean, shared Git history.
-</p>
-<div class="tech-tags">
-    <span class="tag">Unity & C#</span>
-    <span class="tag">Legacy Code Refactoring</span>
-    <span class="tag">System Architecture</span>
-    <span class="tag">Cross-Discipline Collaboration</span>
-</div>
+                <h2>Bukkaku</h2>
+                <div class="team-info">
+                    <div class="team-item"><strong>Role:</strong> Sole Programmer</div>
+                    <div class="team-item"><strong>Team:</strong> 2 (Programmer & Artist/Designer)</div>
+                </div>
+                <p>
+                    An indie game in active development. As the sole programmer collaborating directly with the studio founder/artist, my main focus is overhauling the game's architecture and refactoring legacy [...]
+                </p>
+                <div class="tech-tags">
+                    <span class="tag">Unity & C#</span>
+                    <span class="tag">Legacy Code Refactoring</span>
+                    <span class="tag">System Architecture</span>
+                    <span class="tag">Cross-Discipline Collaboration</span>
+                </div>
             </div>
             <div class="showcase-media">
                 <div class="image-wrapper">
