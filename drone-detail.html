@@ -109,17 +109,16 @@
             margin-bottom: 16px;
         }
 
-        /* OPRAVENÝ SEZNAM */
         ul.detail-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
         ul.detail-list li {
-            padding: 12px 0 12px 24px; /* Odsazení zleva pro pomlčku */
+            padding: 12px 0 12px 24px;
             border-bottom: 1px solid #111;
             font-size: 1.05rem;
-            position: relative; /* Důležité pro absolutní pozici pomlčky */
+            position: relative;
             line-height: 1.6;
         }
         ul.detail-list li::before {
@@ -127,13 +126,12 @@
             color: #4daafc;
             position: absolute;
             left: 0;
-            top: 12px; /* Zarovnání s prvním řádkem textu */
+            top: 12px;
         }
         ul.detail-list li strong {
-            color: #eaeaea; /* Mírně světlejší nadpis položky pro lepší čitelnost */
+            color: #eaeaea;
         }
 
-        /* 2x2 GRID PRO KÓD */
         .code-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -196,7 +194,7 @@
         @media (max-width: 768px) {
             .detail-header h1 { font-size: 2.4rem; }
             .hero-image { height: 240px; }
-            .code-grid { grid-template-columns: 1fr; } /* Na mobilu pod sebou */
+            .code-grid { grid-template-columns: 1fr; } 
         }
     </style>
 </head>
@@ -213,7 +211,7 @@
             <h1>Drone Assembly Simulator</h1>
             <p class="subtitle">
                 A comprehensive PC/VR simulation for drone assembly demonstrating production-ready development cycles. 
-                Features a Unity VR client connected to a custom PHP REST API, with automated CI pipelines and cloud infrastructure managed via Azure and Terraform.
+                Features a Unity VR client connected to a secure .NET 8 Minimal API, with automated CI pipelines and cloud infrastructure managed via Azure and Terraform.
             </p>
 
             <div class="meta-row">
@@ -223,11 +221,11 @@
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">Backend</span>
-                    <span class="meta-value">PHP / REST API</span>
+                    <span class="meta-value">.NET 8 API</span>
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">Database</span>
-                    <span class="meta-value">Azure SQL</span>
+                    <span class="meta-value">Azure MySQL</span>
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">DevOps</span>
@@ -237,10 +235,10 @@
 
             <div class="tech-tags">
                 <span class="tag">Unity VR</span>
+                <span class="tag">.NET 8</span>
                 <span class="tag">Azure</span>
                 <span class="tag">Terraform</span>
                 <span class="tag">CI Pipeline</span>
-                <span class="tag">Secret Management</span>
             </div>
         </header>
 
@@ -267,8 +265,8 @@
             <h2>Architecture & Stack</h2>
             <ul class="detail-list">
                 <li><strong>VR Client (Unity/C#):</strong> Clean architecture utilizing custom Editor Tools and comprehensive Unit Tests to ensure logic stability.</li>
-                <li><strong>Backend Service (PHP):</strong> A custom REST API acting as a bridge between the VR client and the database.</li>
-                <li><strong>Cloud Database (Azure SQL):</strong> Secure and scalable data storage hosted on Microsoft Azure.</li>
+                <li><strong>Backend Service (.NET 8):</strong> A high-performance Minimal API built with C# and Entity Framework Core, serving as a secure bridge to the database.</li>
+                <li><strong>Cloud Database (Azure MySQL):</strong> Secure and scalable data storage hosted on Microsoft Azure Flexible Server.</li>
                 <li><strong>Infrastructure (Terraform):</strong> The Azure environment is defined and deployed through code (Infrastructure as Code).</li>
                 <li><strong>Continuous Integration (CI):</strong> Automated workflows utilizing a headless Unity client to execute Unit Tests. Includes secure secret injection, dynamically generating credential scripts only during the pipeline run to keep the repository strictly secure.</li>
             </ul>
@@ -296,13 +294,13 @@ resource "azurerm_linux_web_app" "vr_app" {
   # ... app service plan definition omitted ...
 
   site_config {
-    application_stack { php_version = "8.2" }
+    application_stack { dotnet_version = "8.0" }
   }
 
   app_settings = {
-    "DB_HOST"    = azurerm_mysql_flexible_server.vr_mysql.fqdn
-    "SECRET_KEY" = var.secret_key
-    # ... remaining database credentials omitted ...
+    "ConnectionStrings__DefaultConnection" = "..."
+    "ApiSecretKey" = var.secret_key
+    # ... remaining credentials omitted ...
   }
 }
 
